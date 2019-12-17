@@ -1,0 +1,104 @@
+div,span,button{
+	padding:0;
+	margin:0;
+}
+button{
+	outline:none;
+}
+$item-2-color:#fff;
+$item-4-color:#FFFACD;
+$item-8-color:#FF8C00;
+$item-16-color:#FF7F50;
+$item-32-color:#F08080;
+$item-64-color:#FF4500;
+$item-128-color:#FFCC00;
+$item-256-color:#FFFF00;
+$item-512-color:#BDB76B;
+$item-1024-color:#FFD700;
+$item-2048-color:#DDA0DD;
+.game-wrapper{
+	margin:20px auto;
+	width:250px;
+	height:250px;
+	background:#ccc;
+	border-radius:5px;
+	.game-item{
+		float:left;
+		margin-left:10px;
+		margin-top:10px;
+		width:50px;
+		height:50px;
+		background:#eee;
+		border-radius:5px;
+		span{
+			display:block;
+			width:50px;
+			height:50px;
+			line-height:50px;
+			text-align:center;
+			font-size:20px;
+			font-weight:bold;
+			color:#fff;
+			border-radius:5px;
+			transition:all 100ms linear;
+			&.num_2{
+				background:$item-2-color;
+				color:#666;
+			}
+			&.num_4{
+				background:$item-4-color;
+				color:#666;
+			}
+			&.num_8{
+				background:$item-8-color;
+			}
+			&.num_16{
+				background:$item-16-color;
+			}
+			&.num_32{
+				background:$item-32-color;
+			}
+			&.num_64{
+				background:$item-64-color;
+			}
+			&.num_128{
+				background:$item-128-color;
+			}
+			&.num_256{
+				background:$item-256-color;
+			}
+			&.num_512{
+				background:$item-512-color;
+			}
+			&.num_1024{
+				background:$item-1024-color;
+			}
+			&.num_2048{
+				background:$item-2048-color;
+			}
+		}
+	}
+}
+.game-operate{
+	margin:20px auto;
+	width:250px;
+	height:80px;
+	.game-score{
+		float:left;
+		width:50%;
+		height:40px;
+		line-height:40px;
+		font-size:24px;
+	}
+	.game-restart{
+		margin-left:20px;
+		float:left;
+		width:100px;
+		height:40px;
+		font-size:40px;
+		font-size:16px;
+		border:0;
+		border-radius:10px;
+		cursor:pointer;
+	}
+}

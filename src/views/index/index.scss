@@ -1,0 +1,91 @@
+.app_wrapper{
+    display:flex;
+    position:relative;
+    width:100%;
+    height:100%;
+    &:after{
+        display:table;
+        content:'';
+        clear:both;
+    }
+    &.close_slider .sidebar_container{
+        width:50px;
+        .ant-menu-item{
+            text-overflow: clip;
+        }
+    }
+    .sidebar_container{
+        position:relative;
+        top:0;
+        left:0;
+        bottom:0;
+        width:250px;
+        height:100%;
+        font-size:0;
+        overflow-y:auto;
+        transition:width .28s;
+        z-index:1001;
+        background:rgb(48, 65, 86);
+        .ant-menu{
+            background:rgb(48,64,86);
+            &.ant-menu-sub{
+                background:#1f2d3d;
+            }
+            .ant-menu-item:hover{
+                background:#001528;
+            }
+            .ant-menu-item-selected{
+                background:none;
+                color:rgb(64, 158, 255);
+            }
+            .ant-menu-item{
+                margin:0;
+            }
+        }
+        .ant-menu-submenu{
+            padding-top:1px;
+            box-sizing: border-box;
+        }
+        .ant-menu-submenu-active{
+            background:rgb(38,52,69);
+        }
+    }
+    .main_container{
+        flex:1;
+        min-height:100%;
+    }
+    .main_header{
+        position:relative;
+        width:100%;
+        height:50px;
+        line-height:50px;
+        background:#fff;
+        box-shadow:0 1px 4px rgba(0,21,41,.08);
+        overflow:hidden;
+        .ant-breadcrumb{
+            margin-left:8px;
+            display:inline-block;
+            height:50px;
+            line-height:50px;
+        }
+        .main_hamburger{
+            padding:0 10px;
+            float:left;
+            height:100%;
+            line-height:inherit;
+            font-size:20px;
+            color:rgb(64,64,64);
+            cursor:pointer;
+            transition:background .3s;
+            &:hover{
+                background:rgba(0,0,0,.025);
+            }
+        }
+    }
+    .main_content{
+        min-height:calc(100vh-50px);
+        width:100%;
+        position:relative;
+        overflow:hidden;
+    }
+}

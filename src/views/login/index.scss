@@ -1,0 +1,76 @@
+.login_wrapper{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:#2d3a4b;
+    .login_main{
+        position:absolute;
+        margin:120px auto;
+        padding:35px 35px 15px;  
+        right:0;
+        left:0;
+        width:520px;
+        max-width:100%;
+        .title{
+            margin:0 auto 40px;
+            font-size:26px;
+            font-weight:700;
+            text-align:center;
+            color:#eee;
+        }
+        .login_item{
+            margin-bottom:22px;
+            background:rgba(0,0,0,.1);
+            border:1px solid hsla(0,0%,100%,.1);
+            border-radius:5px;
+            color:#454545;
+            .login_item_content{
+                position:relative;
+                line-height:36px;
+                font-size:14px;
+                .login_item_csvg{
+                    padding:6px 5px 6px 15px;
+                    display:inline-block;
+                    width:30px;
+                    font-size:20px;
+                    color:#889aa4;
+                }
+                .login_item_input{
+                    position:relative;
+                    display:inline-block;
+                    width:85%;
+                    height:47px;
+                    line-height:36px;
+                    color:#454545;
+                    .login_item_input_inner{
+                        padding:12px 5px 12px 15px;
+                        box-sizing:border-box;
+                        display:inline-block;
+                        width:100%;
+                        height:47px;
+                        font-size:inherit;
+                        outline:0;
+                        -webkit-appearance:none;
+                        background:transparent;
+                        border:0;
+                        border-radius:0;
+                        caret-color:#fff;
+                        color:#eee;
+                        transition:border-color .2s cubic-bezier(.645,.045,.355,1);
+                    }
+                }
+                &:before,&:after{
+                    content:'';
+                    display:table;
+                }
+            }
+            &:before,&:after{
+                content:'';
+                display:table;
+            }
+        }
+        .login_btn{
+            width:100%;
+        }
+    }
+}
