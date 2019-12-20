@@ -9,7 +9,6 @@
         clear:both;
     }
     &.close_slider .sidebar_container{
-        width:50px;
         .ant-menu-item{
             text-overflow: clip;
         }
@@ -19,7 +18,6 @@
         top:0;
         left:0;
         bottom:0;
-        width:250px;
         height:100%;
         font-size:0;
         overflow-y:auto;
@@ -31,11 +29,10 @@
             &.ant-menu-sub{
                 background:#1f2d3d;
             }
-            .ant-menu-item:hover{
+            .ant-menu-item:hover,.ant-menu-item-selected{
                 background:#001528;
             }
             .ant-menu-item-selected{
-                background:none;
                 color:rgb(64, 158, 255);
             }
             .ant-menu-item{
@@ -79,6 +76,13 @@
             transition:background .3s;
             &:hover{
                 background:rgba(0,0,0,.025);
+            }
+        }
+        .header_right{
+            float:right;
+            margin:0 20px;
+            .username{
+                margin-left:4px;
             }
         }
     }

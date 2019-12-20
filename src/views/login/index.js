@@ -1,7 +1,17 @@
 import React,{Component} from 'react';
 import './index.scss';
-import { Button } from 'antd'
+import { Button } from 'antd';
+import {connect} from 'react-redux';
+import store from '@/store/store';
+import {updateUser} from '@/store/actions/userAction';
 class Login extends Component{
+    componentDidMount(){
+        console.log("haha:",this.props)
+    }
+    login(){
+        store.dispatch(updateUser({name:'admin'}));
+        this.props.history.push('/')
+    }
     render(){
         return(
             <div className="login_wrapper">
@@ -27,10 +37,26 @@ class Login extends Component{
                             </div>
                         </div>
                     </div>
-                    <Button className="login_btn" type="primary">登录</Button>
+                    <Button onClick={()=>this.login()} className="login_btn" type="primary">登录</Button>
                 </div>
             </div>
         )
     }
 }
-export default Login;
+const mapStateToProps = (state)=>{
+    return {
+        user:state.user
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateUser(user){
+            dispatch({type:'UPDATE_USER',user:user})
+        }
+        
+    }
+}
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Login);

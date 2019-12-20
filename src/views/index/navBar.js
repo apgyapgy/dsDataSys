@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import { Menu, Icon } from 'antd';
-import {filterRoutes} from '@/router/index';
 import {Link} from 'react-router-dom';
 // import { logicalExpression } from '@babel/types';
 // import Index from '.';
@@ -11,20 +10,15 @@ class Sider extends Component {
   constructor(props){
     super(props);
     this.state = {
-      constRouters:filterRoutes
     };
   }
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
+  
   renderMenuItem(item){//渲染侧边栏元素
     return (
-      <Menu.Item key={item.name}>
+      <Menu.Item key={item.name} >
         <Link to={item.path}>
-          {item.meta&&item.meta.icon?<Icon type={item.meta.icon} />:''}
-          <span>{item.meta&&item.meta.title?item.meta.title:''}</span>
+          {item.icon?<Icon type={item.icon} />:''}
+          <span>{item.title?item.title:''}</span>
         </Link>
       </Menu.Item>
     )
@@ -43,8 +37,8 @@ class Sider extends Component {
                 key={routes[k].name}
                 title={
                   <span>
-                    {routes[k].meta&&routes[k].meta.icon?<Icon type={routes[k].meta.icon} />:''}
-                    <span>{routes[k].meta.title}</span>
+                    {routes[k].icon?<Icon type={routes[k].icon} />:''}
+                    <span>{routes[k].title}</span>
                   </span>
                 }
               >
@@ -61,14 +55,14 @@ class Sider extends Component {
     return linksArr;
   }
   renderMenuIcon(){
-    let routes = this.state.constRouters;
+    let routes = this.props.routes;
     let filtered =  routes.map((item)=>{
       let icon = null;
-      if(item.meta&&item.meta.icon){
-        icon = <Icon key={item.name} type={item.meta.icon} />
+      if(item.icon){
+        icon = <Icon key={item.name} type={item.icon} />
       }else if(item.children&&item.children.length===1){
         let child = item.children[0];
-        icon = <Icon key={item.name} type={child.meta&&child.meta.icon?child.meta.icon:'menu'} />
+        icon = <Icon key={item.name} type={child.icon?child.icon:'menu'} />
       }else{
         icon = <Icon key={item.name} type="menu" />
       }
@@ -78,14 +72,21 @@ class Sider extends Component {
         </Menu.Item>
       )
     });
-    console.log("constRoutes:", filtered)
     return filtered;
   }
   render() {
+    let selectedKeys = '',
+        openKeys = [];
+    let keys = this.props.breadcrumbs.map((item)=>item.name);
+    selectedKeys = keys[keys.length-1];
+    openKeys = keys.slice(0,keys.length-1);
     return (
       <div className="sidebar_container">
-          <Menu defaultSelectedKeys={['1']} mode="inline" theme="dark" >
-            {this.props.collapsed?this.renderMenuIcon():this.renderMenu(this.state.constRouters)}
+          <Menu defaultSelectedKeys={[selectedKeys]} mode="inline" theme="dark" 
+            inlineCollapsed={this.props.collapsed}
+            defaultOpenKeys = {openKeys}
+          >
+            {this.renderMenu(this.props.routes)}
           </Menu>
       </div>
     );

@@ -6,9 +6,6 @@ export default class Content extends Component{
         super(props);
         this.state = {}
     }
-    componentDidMount(){
-        console.log("filterRoutes:",filterRoutes);
-    }
     renderRoutes(routes){
         let routeArr = [];
         for(var key in routes){
@@ -17,7 +14,12 @@ export default class Content extends Component{
                 routeArr = [...routeArr,...this.renderRoutes(item.children)]
             }else{
                 if(!item.hidden){
-                    routeArr.push(<Route key={item.name} exact path={item.path} component={item.component}></Route>);
+                    routeArr.push(
+                        <Route key={item.name} exact path={item.path} 
+                            component={item.component}
+                        >
+                        </Route>
+                    );
                 }
             }
         }

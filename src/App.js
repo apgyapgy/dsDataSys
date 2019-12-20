@@ -1,12 +1,12 @@
 import React,{Component} from 'react';
-// import logo from './logo.svg';
 import './App.css';
 
 import Login from '@/views/login/index';
 import Index from '@/views/index/index';
 
-import {BrowserRouter as Router,Route} from 'react-router-dom';
-// import {routes} from './router/index';
+import {Switch,BrowserRouter as Router,Route} from 'react-router-dom';
+import {Provider} from 'react-redux';
+import store from '@/store/store';
 export default class App extends Component {
   renderRoutes(routes){
     let routeArr = [];
@@ -21,11 +21,14 @@ export default class App extends Component {
   }
   render(){
     return (
-      // {this.renderRoutes(routes)}
-      <Router>
-        <Route path="/login" component={Login} key="aa"></Route>
-        <Route path="/" component={Index} key="bb"></Route>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <Switch>
+            <Route path="/login" component={Login} key="aa"></Route>
+            <Route path="/" component={Index} key="bb"></Route>
+          </Switch>
+        </Router>
+      </Provider>
     );
   }
 }

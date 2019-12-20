@@ -4,9 +4,6 @@ export default class CourierActive extends Component{
         super(props);
         this.state={}
     }
-    componentDidMount(){
-        console.log("componentDidMount:",this.props)
-    }
     render(){
         return (
             <div className="main_content">active</div>
