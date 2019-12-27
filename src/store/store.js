@@ -2,6 +2,7 @@ import {createStore} from 'redux';
 import rootReducer from './reducers/index';
 
 const store = createStore(rootReducer);
+// console.log("initial state:",store.getState());
 let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
 );

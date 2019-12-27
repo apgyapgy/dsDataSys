@@ -3,14 +3,14 @@ import './index.scss';
 import { Button } from 'antd';
 import {connect} from 'react-redux';
 import store from '@/store/store';
-import {updateUser} from '@/store/actions/userAction';
+// import {updateUser} from '@/store/actions/userAction';
 class Login extends Component{
     componentDidMount(){
-        console.log("haha:",this.props)
+        console.log("haha:",this)
     }
     login(){
-        store.dispatch(updateUser({name:'admin'}));
-        this.props.history.push('/')
+        store.dispatch({type:'UPDATE_USER',user:{name:'admin'}});
+        this.props.history.push('/');
     }
     render(){
         return(
@@ -60,3 +60,5 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(Login);
+
+// D2216 D3060 D3022 g7564 D3068 D3090 G7240 K1156 D3026 D3006 D3010 D3032 D3014 

@@ -1,9 +1,9 @@
 import React,{Component} from 'react';
 import BreadcrumbCus from './breadcrumb';
 import './index.scss';
-import Sider from './navBar';
-import Content from './content';
-import Header from './header';
+import CustomSider from './navBar';
+import CustomContent from './content';
+import CustomHeader from './header';
 import {Icon} from 'antd';
 import {filterRoutes} from '@/router/index';
 // import Item from 'antd/lib/list/Item';
@@ -18,6 +18,7 @@ export default class Index extends Component{
         }
     }
     toggleCollapse(){
+        console.log("toggleCollapse:")
         localStorage.collapsed = !this.state.collapsed;
         this.setState({
             collapsed:!this.state.collapsed
@@ -80,8 +81,8 @@ export default class Index extends Component{
                 {
                     this.state.breadcrumbs.length
                     ?
-                    <Sider collapsed={this.state.collapsed} routes={filterRoutes} 
-                breadcrumbs={this.state.breadcrumbs}/>
+                    <CustomSider collapsed={this.state.collapsed} routes={filterRoutes} 
+                    breadcrumbs={this.state.breadcrumbs}/>
                     :''
                 }
                 <div className="main_container">
@@ -89,9 +90,9 @@ export default class Index extends Component{
                         <Icon className="main_hamburger" type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} 
                          onClick={()=>this.toggleCollapse()} />
                         <BreadcrumbCus breadcrumbs={this.state.breadcrumbs} />
-                        <Header />
+                        <CustomHeader />
                     </div>
-                    <Content></Content>
+                    <CustomContent></CustomContent>
                 </div>
             </div>
         )

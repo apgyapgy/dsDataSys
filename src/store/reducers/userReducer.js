@@ -1,5 +1,10 @@
 import {UPDATE_USER} from '../actions/userAction';
-export default function(state = '',action){
+const initialUser = {
+    user:{
+        name:'用户'
+    }
+}
+export default function(state = initialUser,action){
     switch(action.type){
         case UPDATE_USER:
             return{

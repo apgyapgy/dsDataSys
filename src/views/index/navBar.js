@@ -80,6 +80,9 @@ class Sider extends Component {
     let keys = this.props.breadcrumbs.map((item)=>item.name);
     selectedKeys = keys[keys.length-1];
     openKeys = keys.slice(0,keys.length-1);
+    if(this.props.collapsed){
+      openKeys = [];
+    }
     return (
       <div className="sidebar_container">
           <Menu defaultSelectedKeys={[selectedKeys]} mode="inline" theme="dark" 
