@@ -6,6 +6,7 @@ import LineChart from '@/components/lineChart';
 import {getSearchList,qryData,qryByTraceId} from '@/utils/public'
 // import Request from '@/utils/request';
 export default class CourierAdd extends Component{
+    methodNm = window.atob('c2piLmNvdXJpZXJzLm5ldy5xdWVyeQ==')
     constructor(props){
         super(props);
         this.state={
@@ -23,7 +24,7 @@ export default class CourierAdd extends Component{
 	  			series:[
 	            ]
             },
-            methodNm:'sjb.couriers.new.query'
+            methodNm:this.methodNm
         };
         this.initData = this.initData.bind(this);
     }
@@ -95,7 +96,7 @@ export default class CourierAdd extends Component{
         this.setState({
             searchInfo:searchInfo,
             searchedInfo:{
-                methodNm:'sjb.couriers.new.query',
+                methodNm:this.methodNm,
 				dtTp:'1',
 				traceId:''
             }
@@ -120,12 +121,13 @@ export default class CourierAdd extends Component{
         ]
     }
     async initData(){
-        console.log("initData",this)
         // let _this = this;
-        let data;
+        // let data;
         // let data = await qryData(this.state.searchInfo,this.state.methodNm);
+        // console.log("qryData:",data)
         let searchedInfo = this.state.searchedInfo;
-        searchedInfo.traceId = '6DE72E632DD6795854625EED5F1CA1AC'; //data.traceId;
+        // searchedInfo.traceId = data.traceId;//'6DE72E632DD6795854625EED5F1CA1AC'; //data.traceId;
+        searchedInfo.traceId = '480F71A6FFFBED9A5676960EF4B71BD7'; //data.traceId;
         searchedInfo.dtTp = this.state.searchInfo.dtTp;
         searchedInfo.methodNm = this.state.methodNm;
         qryByTraceId(searchedInfo,res=>{
@@ -166,7 +168,7 @@ export default class CourierAdd extends Component{
             <div className="main_content">
                 <Search searchInfo={this.state.searchInfo} obj={this} initData={this.initData} />
                 <LineChart data={this.state.lineData}/>
-                <Table data={this.state.dataList} down={true} />
+                <Table data={this.state.dataList} down={true} searchedInfo={this.state.searchedInfo} />
             </div>
         )
     }

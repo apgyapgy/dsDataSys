@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select,Input,DatePicker,Button } from 'antd';
-import {updateSearchInfo} from '@/utils/public';
+import {updateSearchInfo,formatDate} from '@/utils/public';
 // import Request from '@/utils/request';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
@@ -87,15 +87,23 @@ export default class Search extends React.Component{
                     value:'04'
                 }
             ],
+            initDateFlag:false,//是否初始化过日期
         }
         this.handleDateChange = this.handleDateChange.bind(this);
         this.changeDateRange = this.changeDateRange.bind(this);
     }
     componentDidMount(){
         // console.log("searchInfo:",this.props)
+        
     }
     componentDidUpdate(){
         // console.log("searchInfo:",this.props)
+        if(!this.state.initDateFlag){
+            this.setState({
+                initDateFlag:true
+            });
+            this.setInitDate();
+        }
     }
     renderSearchItem(){//渲染条件维度
         return this.props.searchInfo.list.map((item,idx)=>{
@@ -110,7 +118,8 @@ export default class Search extends React.Component{
                 case 'date':return (
                     <div className="filter_item" key={idx}>
                         {item.label}：
-                        <RangePicker value={item.value.map((date)=>moment(date,'YYYY-MM-DD'))} locale={locale}
+                        <RangePicker value={item.value.map((date)=>moment(date,'YYYYMMDD'))} 
+                            locale={locale}
                             format="YYYY-MM-DD" onChange={this.handleDateChange}
                             disabledDate={(current)=>current && current > moment().endOf('day')}
                         />
@@ -181,6 +190,12 @@ export default class Search extends React.Component{
             searchInfo = this.props.searchInfo;
         searchInfo.dtTp = value;
         obj.setState({searchInfo:searchInfo})
+    }
+    setInitDate(){//初始化日期
+        let endDate = new Date();
+        let beginDate = new Date(endDate.getTime()-30*24*60*60*1000);
+        console.log("setInitDate:",formatDate(beginDate),formatDate(endDate))
+        updateSearchInfo(this.props.obj,[formatDate(beginDate,''),formatDate(endDate,'')],this.props.searchInfo.dateIdx,'dateRange');
     }
     render(){
         return (

@@ -9,7 +9,7 @@ export default class LineChart extends Component{
         this.chart = myChart;
     }
     componentDidUpdate(){
-        console.log("componentDidUpdate:",this.props);
+        // console.log("componentDidUpdate:",this.props);
         this.setOption(this.props.data);
     }
     setOption(opts){
@@ -40,6 +40,11 @@ export default class LineChart extends Component{
         }
         if(opts.dataset){
             options.dataset = opts.dataset;
+            options.legend = {
+                type:'scroll',
+                bottom: true,
+                padding:0,
+            };
         }
         this.chart.setOption(options,true);
     }

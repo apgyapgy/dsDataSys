@@ -7,7 +7,7 @@ const Request = function(opts){
         headers:{
             'Accept':'application/json,text/plain,*/*',
             'user-agent':'Mozilla/4.0 MDN Example',
-            'content-type':'application/x-www-form-urlencoded',
+            'content-type':'application/x-www-form-urlencoded;charset=UTF-8',
             // 'Cache-Control':'no-cache'
         },
         method:opts.method?opts.method:'GET'
@@ -22,8 +22,36 @@ const Request = function(opts){
         }
     }
     fetch(url,initDatas)
-    .then(res=>res.json())
+    .then(res=>{
+        console.log("res:",res);
+        if(opts.down){
+            if(res.ok){
+                return res.blob();
+            }else{
+                message.error('系统异常!');
+            }
+        }else{
+            return res.json();
+        }
+    })
     .then(data=>{
+        console.log("data:",data);
+        if(opts.down){
+            let url = window.URL.createObjectURL(data);
+            var a = document.createElement('a');
+            a.href = url;
+            a.target = '_blank';
+            a.download = `${opts.fileName?opts.fileName:'数据系统'}.xls`;
+            document.body.appendChild(a);
+            a.click();
+            let timer = setTimeout(()=>{
+                console.log("url:",url);
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                clearTimeout(timer);
+            },1000);
+            return;
+        }
         if(data.code === 200){
             if(opts.success){
                 opts.success(data);

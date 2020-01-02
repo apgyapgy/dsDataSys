@@ -125,7 +125,8 @@ export function qryData(data,methodNm){//查询数据
 export function qryByTraceId(data,success,fail){//根据traceId查询数据
     let params = {
         methodNm:data.methodNm,
-        traceId:data.traceId
+        traceId:data.traceId,
+        dtTp:data.dtTp
     };
     let queryCount = 200;
     let timer = null;
@@ -164,4 +165,36 @@ export function qryByTraceId(data,success,fail){//根据traceId查询数据
     return new Promise((resolve,reject)=>{
         
     })
+}
+
+export function formatDate(date=new Date(),split='-'){//格式化日期
+    let dateArr = [date.getFullYear(),((date.getMonth()+1)+'').padStart(2,'0'),(date.getDate()+'').padStart(2,'0')];
+    return dateArr.join(split);
+}
+
+export const namesObj = {//下载的文件名
+    'c2piLmNvdXJpZXJzLm5ldy5xdWVyeQ==':'快递员新增',
+    'c2piLmNvdXJpZXJzLmFjdGl2ZS5xdWVyeQ==':'快递员活跃人数',
+    'c2piLmNvdXJpZXJzLnJldGVudGlvbi5yYXRlLnF1ZXJ5':'新注册快递员留存率',
+    'c2piLmNvdXJpZXJzLmNvdW50LnF1ZXJ5':'快递员总数',
+    'c2piLmhvc3QuY291cmllcnMuY29uc3VtcHRpb24ucXVlcnk=':'快递员消费构成',
+    'c2piLmhvc3QuY291cmllcnMuZ3JhZGUucXVlcnk=':'快递员分等级消费比例',
+    'c2piLmhvc3QuY2hhcmdlLnRvdGFsLmJhbGFuY2UucXVlcnk=':'快递员充值总余额',
+    'c2piLmhvc3QuY2hhcmdlLm9yZGVyLmNvdW50LnF1ZXJ5':'快递员充值订单数',
+    'c2piLmhvc3QuY2hhcmdlLm9yZGVyLmFtb3VudC5xdWVyeQ==':'快递员充值订单分金额统计',
+    'c2piLmhvc3Qub3ZlcmR1ZS5yYXRlLnF1ZXJ5':'逾期消费人数',
+    'c2piLmhvc3QucmV2ZW51ZS5zdW1tYXJ5LnF1ZXJ5':'快递柜业务收入汇总',
+    'c2piLm1hbmFnZXIuaG9zdC5pbmNvbWUuYXZnLnF1ZXJ5':'台均收入',
+    'sjb.manager.host.turnover.rate.query':'快递柜周转率',
+    'c2piLmJ1cmllZC5wb2ludC5jb3VudC5xdWVyeQ==':'埋点数据',
+    'c2piLmJ1cmllZC5wb2ludC50aW1lLnF1ZXJ5':'埋点数据',
+    'c2piLnBhY2thZ2Uuc3RheS50aW1lLnF1ZXJ5':'包裹箱格停留时间',
+    'c2piLnBhY2thZ2UuZGVsaXZlci5jb3VudC5xdWVyeQ==':'包裹投递总数',
+    'c2piLnBhY2thZ2UuZGVsaXZlci50aW1lLnF1ZXJ5':'包裹投递时间分时统计',
+    'c2piLnBhY2thZ2Uub3ZlcmR1ZS5yYXRlLnF1ZXJ5':'包裹逾期率',
+    'c2piLnBhY2thZ2UucmVjb3ZlcnkucmF0ZS5xdWVyeQ==':'包裹回收率',
+    'c2piLnBhY2thZ2UucGlja3VwLnRpbWUucXVlcnk=':'包裹取出时间分时统计',
+    'c2piLnBhY2thZ2UucGlja3VwLmFjdGl2ZS5xdWVyeQ==':'收件人活跃人数',
+    'c2piLnBhY2thZ2UucGlja3VwLm5ldy5xdWVyeQ==':'收件人新增数',
+    'c2piLnBhY2thZ2UucGlja3VwLmNvdW50LnF1ZXJ5':'收件人总数',
 }
