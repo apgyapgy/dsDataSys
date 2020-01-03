@@ -94,6 +94,14 @@ export function updateSearchInfo(obj,val,idx,name){
     }
 }
 
+export function updateOperateType(obj,val){
+    let searchInfo = obj.state.searchInfo;
+    searchInfo.operateType = val;
+    obj.setState({
+        searchInfo:searchInfo
+    });
+}
+
 export function getQueryParams(searchInfo,methodNm){
     let params = {};
     params.methodNm = methodNm;

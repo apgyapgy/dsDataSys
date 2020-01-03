@@ -1,14 +1,16 @@
 import React from 'react';
-import { Select,Input,DatePicker,Button } from 'antd';
-import {updateSearchInfo,formatDate} from '@/utils/public';
+import { Select,Input,DatePicker,Button,TreeSelect } from 'antd';
+import {updateSearchInfo,formatDate,updateOperateType} from '@/utils/public';
 // import Request from '@/utils/request';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
+import {operateIds} from '@/utils/operateIds';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 
 const { Option } = Select;
 const {RangePicker} = DatePicker;
+const { TreeNode } = TreeSelect;
 export default class Search extends React.Component{
     constructor(props){
         super(props);
@@ -91,6 +93,8 @@ export default class Search extends React.Component{
         }
         this.handleDateChange = this.handleDateChange.bind(this);
         this.changeDateRange = this.changeDateRange.bind(this);
+        this.handleOperateChange = this.handleOperateChange.bind(this);
+        this.handleOperateTypeChange = this.handleOperateTypeChange.bind(this);
     }
     componentDidMount(){
         // console.log("searchInfo:",this.props)
@@ -108,13 +112,12 @@ export default class Search extends React.Component{
     renderSearchItem(){//渲染条件维度
         return this.props.searchInfo.list.map((item,idx)=>{
             switch(item.type){
-                case 'input':
-                    return (
-                        <div className="filter_item" key={idx}>
-                            <Input placeholder={item.placeholder?item.placeholder:'请输入'} 
-                                value={item.value} onChange={(event)=>this.handleInputChange(event,idx,item.name)} />
-                        </div>
-                    );
+                case 'input':return (
+                    <div className="filter_item" key={idx}>
+                        <Input placeholder={item.placeholder?item.placeholder:'请输入'} 
+                            value={item.value} onChange={(event)=>this.handleInputChange(event,idx,item.name)} />
+                    </div>
+                );
                 case 'date':return (
                     <div className="filter_item" key={idx}>
                         {item.label}：
@@ -152,6 +155,21 @@ export default class Search extends React.Component{
             }
         })
     }
+    renderOperateItem(data){//渲染埋点id的元素
+        return data.children.map((item,idx)=>{
+            return (
+                item.children&&item.children.length
+                ?
+                <TreeNode value={item.value} title={item.label} key={item.value}>
+                    {
+                        this.renderOperateItem(item)
+                    }
+                </TreeNode>
+                :
+                <TreeNode value={item} title={item} key={item} />
+            )
+        })
+    }
     renderItem(datas){//渲染下拉列表框选项
         return datas.map((data)=><Option value={data.value} key={data.value}>{data.label}</Option>)
     }
@@ -165,6 +183,14 @@ export default class Search extends React.Component{
     handleDateChange(dates,dateStrings){//选择日期
         // console.log("handleDateChange:",dates,dateStrings)
         updateSearchInfo(this.props.obj,dateStrings,this.props.searchInfo.dateIdx,'dateRange');
+    }
+    handleOperateTypeChange(data){//选择埋点类型
+        console.log("handleOperateTypeChange:",data)
+        updateOperateType(this.props.obj,data);
+    }
+    handleOperateChange(data){//选择埋点id
+        console.log("onOperateChange:",data);
+        updateSearchInfo(this.props.obj,data,this.props.searchInfo.operateIdx);
     }
     handleInputChange(e,idx,name){
         const {value} = e.target;
@@ -203,6 +229,36 @@ export default class Search extends React.Component{
                 <div className="filter_container clearfix">
                     {this.props.searchInfo?.list?this.renderSearchItem():''}
                 </div>
+                {this.props.searchInfo.operateIdx?
+                    <div className="filter_container clearfix">
+                        <div className="filter_item">
+                            埋点类型：
+                            <Select style={{ width: 200 }}
+                                onChange={(e)=>this.handleOperateTypeChange(e)}
+                                placeholder='请选择埋点类型'
+                                value={this.props.searchInfo.operateType}
+                            >
+                                <Option value="0" key="0">计数类</Option>
+                                <Option value="1" key="1">计时类</Option>
+                            </Select>
+                        </div>
+                        <TreeSelect style={{width:'340px'}}
+                            className="filter_item"
+                            showSearch
+                            value={this.props.searchInfo.list[this.props.searchInfo.operateIdx].value}
+                            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                            placeholder="请选择埋点id"
+                            allowClear
+                            multiple
+                            maxTagCount={3}
+                            treeDefaultExpandAll
+                            onChange={this.handleOperateChange} key={this.props.searchInfo.operateIdx}
+                        >
+                            {this.renderOperateItem(operateIds[this.props.searchInfo.operateType])}
+                        </TreeSelect>
+                    </div>
+                    :null
+                }
                 <div className="filter_container clearfix">
                     <Button type="primary" onClick={()=>this.resetCondition()}>重置条件</Button>
                     <Button className="float_right" type="primary" onClick={()=>this.toSearch()}>查询</Button>
