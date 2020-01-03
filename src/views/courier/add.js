@@ -3,7 +3,7 @@ import React,{Component} from 'react';
 import Search from '@/components/search';
 import Table from '@/components/table';
 import LineChart from '@/components/lineChart';
-import {getSearchList,qryData,qryByTraceId} from '@/utils/public'
+import {getSearchList,qryByTraceId} from '@/utils/public';//qryData
 // import Request from '@/utils/request';
 export default class CourierAdd extends Component{
     methodNm = window.atob('c2piLmNvdXJpZXJzLm5ldy5xdWVyeQ==')

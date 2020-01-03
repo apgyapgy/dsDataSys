@@ -31,7 +31,7 @@ export function getSearchList(obj,type){
         url:'api/data/cond',
         data:params,
         success(res){
-            console.log("cond:",res);
+            // console.log("cond:",res);
             let data = res.data;
             if(type){
                 //选择省，市和负责人清空;选择市,负责人清空

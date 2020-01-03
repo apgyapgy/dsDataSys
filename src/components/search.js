@@ -194,7 +194,7 @@ export default class Search extends React.Component{
     setInitDate(){//初始化日期
         let endDate = new Date();
         let beginDate = new Date(endDate.getTime()-30*24*60*60*1000);
-        console.log("setInitDate:",formatDate(beginDate),formatDate(endDate))
+        // console.log("setInitDate:",formatDate(beginDate),formatDate(endDate))
         updateSearchInfo(this.props.obj,[formatDate(beginDate,''),formatDate(endDate,'')],this.props.searchInfo.dateIdx,'dateRange');
     }
     render(){
