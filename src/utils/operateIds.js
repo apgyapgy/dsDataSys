@@ -1,98 +1,147 @@
+function formatOperateId(arr){
+	return arr.map((item)=>{
+		return {
+			title:item,
+			key:item,
+			value:item
+		}
+	});
+}
 export var operateIds = [
 	{
-	    label: '计数类',
+		title: '计数类',
 	    children: [
 		    {
-		        value: '1',
-		        label: '手机APP端',
+				value: '1',
+				key:'1',
+				title: '手机APP端',
+				selectable:false,
 		        children: [
 		          	{ 
 		          		value: '11', 
-		          		label: '充值相关',
-		          		children:['B0001','B0002','B0003','B0004','B0005']
+		          		key: '11', 
+		          		title: '充值相关',
+						selectable:false,
+		          		children:formatOperateId(['B0001','B0002','B0003','B0004','B0005'])
 		          	},{ 
 		          		value: '12', 
-		          		label: '投递相关',
-		          		children:['B0006','B0007','B0008','B0009','B0010','B0011','B0012','B0013','B0014','B0015','B0016','B0017','B0018','B0019','B0020','B0021','B0022','B0023','B0024','B0025','B0026']
+		          		key: '12', 
+		          		title: '投递相关',
+						selectable:false,
+		          		children:formatOperateId(['B0006','B0007','B0008','B0009','B0010','B0011','B0012','B0013','B0014','B0015','B0016','B0017','B0018','B0019','B0020','B0021','B0022','B0023','B0024','B0025','B0026'])
 		          	},{ 
 		          		value: '13', 
-		          		label: '消费相关',
-		          		children:['B0027','B0028','B0029','B0030','B0031','B0032','B0033','B0034','B0035']
+		          		key: '13', 
+		          		title: '消费相关',
+						selectable:false,
+		          		children:formatOperateId(['B0027','B0028','B0029','B0030','B0031','B0032','B0033','B0034','B0035'])
 		          	},{ 
 		          		value: '14', 
-		          		label: '其他相关',
-		          		children:['B0036','B0037','B0038','B0039','B0040','B0041','B0042','B0043','B0044','B0045','B0046','B0047','B0048','B0049','B0050']
+		          		key: '14', 
+		          		title: '其他相关',
+						selectable:false,
+		          		children:formatOperateId(['B0036','B0037','B0038','B0039','B0040','B0041','B0042','B0043','B0044','B0045','B0046','B0047','B0048','B0049','B0050'])
 		          	},{ 
 		          		value: '15', 
-		          		label: '手机投递PlanA',
-		          		children:['C0001','C0002','C0003','C0004','C0005','C0006','C0007','C0008','C0009','C0010','C0011','C0012','C0013','C0014','C0015','C0016','C0017','C0018','C0019','C0020','C0021','C0022','C0023','C0024','C0025','C0026','C0027','C0028','C0034','C0035']
+		          		key: '15', 
+		          		title: '手机投递PlanA',
+						selectable:false,
+		          		children:formatOperateId(['C0001','C0002','C0003','C0004','C0005','C0006','C0007','C0008','C0009','C0010','C0011','C0012','C0013','C0014','C0015','C0016','C0017','C0018','C0019','C0020','C0021','C0022','C0023','C0024','C0025','C0026','C0027','C0028','C0034','C0035'])
 		          	},{ 
 		          		value: '16', 
-		          		label: '手机投递PlanB',
-		          		children:['D0001','D0002','D0004','D0005','D0006','D0007','D0008','D0009','D0010','D0011','D0012','D0014','D0015','D0016','D0017','D0018','D0020']
+		          		key: '16', 
+		          		title: '手机投递PlanB',
+						selectable:false,
+		          		children:formatOperateId(['D0001','D0002','D0004','D0005','D0006','D0007','D0008','D0009','D0010','D0011','D0012','D0014','D0015','D0016','D0017','D0018','D0020'])
 		          	},{ 
 		          		value: '17', 
-		          		label: 'APP预定功能',
-		          		children:['E0001','E0002','E0003','E0004','E0005','E0006','E0008','E0009','E0010','E0011','E0012','E0015','E0016','E0017','E0018','E0019']
+		          		key: '17', 
+		          		title: 'APP预定功能',
+						selectable:false,
+		          		children:formatOperateId(['E0001','E0002','E0003','E0004','E0005','E0006','E0008','E0009','E0010','E0011','E0012','E0015','E0016','E0017','E0018','E0019'])
 		          	}
 		        ]
 		    },{
 		        value: '2',
-		        label: '柜子端',
+		        key: '2',
+		        title: '柜子端',
+				selectable:false,
 		        children: [
 		          	{ 
 		          		value: '21', 
-		          		label: '广告类',
-		          		children:['A0001','A0015','A0016']
+		          		key: '21', 
+		          		title: '广告类',
+						selectable:false,
+		          		children:formatOperateId(['A0001','A0015','A0016'])
 		          	},{ 
 		          		value: '22', 
-		          		label: '用户取件',
-		          		children:['A0002','A0003','A0004']
+		          		key: '22', 
+		          		title: '用户取件',
+						selectable:false,
+		          		children:formatOperateId(['A0002','A0003','A0004'])
 		          	},{ 
 		          		value: '23', 
-		          		label: '投递类',
-		          		children:['A0006','A0008','A0009']
+		          		key: '23', 
+		          		title: '投递类',
+						selectable:false,
+		          		children:formatOperateId(['A0006','A0008','A0009'])
 		          	},{ 
 		          		value: '24', 
-		          		label: '其他',
-		          		children:['A0007','A0010','A0012','A0013','A0014']
+		          		key: '24', 
+		          		title: '其他',
+						selectable:false,
+		          		children:formatOperateId(['A0007','A0010','A0012','A0013','A0014'])
 		          	},{ 
 		          		value: '25', 
-		          		label: '逾期费用类',
-		          		children:['A0017','A0018','A0019','A0020','A0021','A0022','A0023','A0024','A0025','A0026']
+		          		key: '25', 
+		          		title: '逾期费用类',
+						selectable:false,
+		          		children:formatOperateId(['A0017','A0018','A0019','A0020','A0021','A0022','A0023','A0024','A0025','A0026'])
 		          	}
 		        ]
 		    }
 		]
 	},{
-	    label: '计时类',
+	    title: '计时类',
 	    children: [
 		    {
 		        value: '3',
-		        label: '手机APP端',
+		        key: '3',
+		        title: '手机APP端',
+				selectable:false,
 		        children: [
 		          	{ 
 		          		value: '31', 
-		          		label: '手机投递PlanA',
-		          		children:['C0029','C0030','C0031','C0032','C0033']
+		          		key: '31', 
+		          		title: '手机投递PlanA',
+						selectable:false,
+		          		children:formatOperateId(['C0029','C0030','C0031','C0032','C0033'])
 		          	},{ 
 		          		value: '32', 
-		          		label: '手机投递PlanB',
-		          		children:['D0003','D0013','D0019']
+		          		key: '32', 
+		          		title: '手机投递PlanB',
+						selectable:false,
+		          		children:formatOperateId(['D0003','D0013','D0019'])
 		          	}
 		        ]
 		    },{
 		        value: '4',
-		        label: '柜子端',
+		        key: '4',
+		        title: '柜子端',
+				selectable:false,
 		        children: [
 		          	{ 
 		          		value: '41', 
-		          		label: '广告类',
-		          		children:['A0005']
+		          		key: '41', 
+		          		title: '广告类',
+						selectable:false,
+		          		children:formatOperateId(['A0005'])
 		          	},{ 
 		          		value: '42', 
-		          		label: '其他',
-		          		children:['A0011']
+		          		key: '42', 
+		          		title: '其他',
+						selectable:false,
+		          		children:formatOperateId(['A0011'])
 		          	}
 		        ]
 		    }

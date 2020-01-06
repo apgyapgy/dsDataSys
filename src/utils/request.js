@@ -15,7 +15,7 @@ const Request = function(opts){
     let url = baseUrl+opts.url;
     if(opts.method === 'POST'){
         initDatas.body = opts.data?JSON.stringify(opts.data):{}
-    }else{
+    }else if(opts.data){
         let paramStr = formatParams(opts.data);
         if(paramStr){
             url += '?' + paramStr;
@@ -23,7 +23,6 @@ const Request = function(opts){
     }
     fetch(url,initDatas)
     .then(res=>{
-        console.log("res:",res);
         if(opts.down){
             if(res.ok){
                 return res.blob();
@@ -35,7 +34,7 @@ const Request = function(opts){
         }
     })
     .then(data=>{
-        console.log("data:",data);
+        console.log(opts.url+":",data);
         if(opts.down){
             let url = window.URL.createObjectURL(data);
             var a = document.createElement('a');

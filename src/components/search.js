@@ -10,7 +10,6 @@ moment.locale('zh-cn');
 
 const { Option } = Select;
 const {RangePicker} = DatePicker;
-const { TreeNode } = TreeSelect;
 export default class Search extends React.Component{
     constructor(props){
         super(props);
@@ -96,10 +95,11 @@ export default class Search extends React.Component{
         this.handleOperateChange = this.handleOperateChange.bind(this);
         this.handleOperateTypeChange = this.handleOperateTypeChange.bind(this);
     }
+
     componentDidMount(){
         // console.log("searchInfo:",this.props)
-        
     }
+
     componentDidUpdate(){
         // console.log("searchInfo:",this.props)
         if(!this.state.initDateFlag){
@@ -109,6 +109,7 @@ export default class Search extends React.Component{
             this.setInitDate();
         }
     }
+
     renderSearchItem(){//渲染条件维度
         return this.props.searchInfo.list.map((item,idx)=>{
             switch(item.type){
@@ -147,56 +148,50 @@ export default class Search extends React.Component{
                                 placeholder={item.placeholder?item.placeholder:'请选择'}
                                 maxTagCount={1}
                                 value={item.value}
+                                allowClear
                             >
-                                {datas.length? this.renderItem(datas) :''}
+                                {datas.length? this.renderSelectItem(datas) :''}
                             </Select>
                         </div>
                     );
             }
         })
     }
-    renderOperateItem(data){//渲染埋点id的元素
-        return data.children.map((item,idx)=>{
-            return (
-                item.children&&item.children.length
-                ?
-                <TreeNode value={item.value} title={item.label} key={item.value}>
-                    {
-                        this.renderOperateItem(item)
-                    }
-                </TreeNode>
-                :
-                <TreeNode value={item} title={item} key={item} />
-            )
-        })
-    }
-    renderItem(datas){//渲染下拉列表框选项
+
+    renderSelectItem(datas){//渲染下拉列表框选项
         return datas.map((data)=><Option value={data.value} key={data.value}>{data.label}</Option>)
     }
+
     handleChange(value,name,idx){//选择下拉列表框
         updateSearchInfo(this.props.obj,value,idx,name);
     }
+
     handleEnter(e){
         // e.persist()
         console.log("handleEnter:",e)
     }
+
     handleDateChange(dates,dateStrings){//选择日期
         // console.log("handleDateChange:",dates,dateStrings)
         updateSearchInfo(this.props.obj,dateStrings,this.props.searchInfo.dateIdx,'dateRange');
     }
+
     handleOperateTypeChange(data){//选择埋点类型
         console.log("handleOperateTypeChange:",data)
         updateOperateType(this.props.obj,data);
+        updateSearchInfo(this.props.obj,[],this.props.searchInfo.operateIdx,'actionId');
     }
-    handleOperateChange(data){//选择埋点id
-        console.log("onOperateChange:",data);
+
+    handleOperateChange(data,label,extra){//选择埋点id
+        console.log("onOperateChange:",data,label,extra);
         updateSearchInfo(this.props.obj,data,this.props.searchInfo.operateIdx);
     }
+
     handleInputChange(e,idx,name){
         const {value} = e.target;
-        // console.log("handleInputChange:",e,value)
         updateSearchInfo(this.props.obj,value,idx,name);
     }
+
     resetCondition(){//重置条件
         let obj = this.props.obj;
         let searchInfo = obj.state.searchInfo;
@@ -208,21 +203,24 @@ export default class Search extends React.Component{
             searchInfo:searchInfo
         });
     }
+
     toSearch(){//查询
         this.props.initData();
     }
+
     changeDateRange(value){//选择按天、按周或按月
         let obj = this.props.obj,
             searchInfo = this.props.searchInfo;
         searchInfo.dtTp = value;
         obj.setState({searchInfo:searchInfo})
     }
+
     setInitDate(){//初始化日期
         let endDate = new Date();
         let beginDate = new Date(endDate.getTime()-30*24*60*60*1000);
-        // console.log("setInitDate:",formatDate(beginDate),formatDate(endDate))
         updateSearchInfo(this.props.obj,[formatDate(beginDate,''),formatDate(endDate,'')],this.props.searchInfo.dateIdx,'dateRange');
     }
+
     render(){
         return (
             <div className="search_wrapper">
@@ -243,7 +241,7 @@ export default class Search extends React.Component{
                             </Select>
                         </div>
                         <TreeSelect style={{width:'340px'}}
-                            className="filter_item"
+                            className="filter_item operate"
                             showSearch
                             value={this.props.searchInfo.list[this.props.searchInfo.operateIdx].value}
                             dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
@@ -251,10 +249,9 @@ export default class Search extends React.Component{
                             allowClear
                             multiple
                             maxTagCount={3}
-                            treeDefaultExpandAll
+                            treeData={operateIds[this.props.searchInfo.operateType].children}
                             onChange={this.handleOperateChange} key={this.props.searchInfo.operateIdx}
                         >
-                            {this.renderOperateItem(operateIds[this.props.searchInfo.operateType])}
                         </TreeSelect>
                     </div>
                     :null
@@ -292,21 +289,4 @@ export default class Search extends React.Component{
 	  			}
   			]
   	}
-*/
-/* 
-    <div className="filter_item">
-        大区：<Select mode="tags"
-            showSearch
-            style={{ width: 200 }}
-            placeholder="Select a person"
-            optionFilterProp="children"
-            filterOption={(input, option) =>
-                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-        >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
-        </Select>
-    </div> 
 */

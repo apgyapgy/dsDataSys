@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import Search from '@/components/search';
 import Table from '@/components/table';
 import LineChart from '@/components/lineChart';
-// import {getSearchList,qryByTraceId} from '@/utils/public';//qryData
+import {getSearchList,qryByTraceId} from '@/utils/public';//qryData
 export default class Operate extends Component{
     constructor(props){
         super(props);
@@ -56,9 +56,7 @@ export default class Operate extends Component{
         });
         return tableHeader;
     }
-    getSearchInfo(){
-        console.log("getSearchInfo")
-    }
+
     initSearchInfo(){
         let searchInfo = {
             spendTime:0,
@@ -138,6 +136,10 @@ export default class Operate extends Component{
         },()=>{
             this.getSearchInfo();
         });
+    }
+
+    getSearchInfo(type){
+        getSearchList(this,type);
     }
 
     initData(){

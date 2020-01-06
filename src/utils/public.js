@@ -145,6 +145,7 @@ export function qryByTraceId(data,success,fail){//根据traceId查询数据
             data:params,
             success(res){
                 console.log("qryByTraceId:",res);
+                clearTimeout(timer);
                 if(res.data && res.data.items){
                     if((res.data.item&&!res.data.item.length)||(res.data.items&&!res.data.items.length)){
                         message.info('暂无数据!');
@@ -156,7 +157,6 @@ export function qryByTraceId(data,success,fail){//根据traceId查询数据
                     }else{
                         success(res.data.items);
                     }
-                    clearTimeout(timer);
                 }else{
                     queryCount--;
                     if(queryCount){
@@ -170,9 +170,37 @@ export function qryByTraceId(data,success,fail){//根据traceId查询数据
             }
         })
     }
-    return new Promise((resolve,reject)=>{
-        
-    })
+}
+
+export function qryPanelByTraceId(params,success,fail){//根据traceId查询数据
+    let queryCount = 200;
+    let timer = null;
+    query();
+    function query(){
+        Request({
+            url:'api/data/panel',
+            data:params,
+            success(res){
+                clearTimeout(timer);
+                if(res.data.dataQryIsEnd){
+                    if(success){
+                        success(res);
+                    }else{
+                        success(res.data.items);
+                    }
+                }else{
+                    queryCount--;
+                    if(queryCount){
+                        timer = setTimeout(()=>{
+                            query();
+                        },3000);
+                    }else{
+                        MessageChannel.info('查询失败!');
+                    }
+                }
+            }
+        })
+    }
 }
 
 export function formatDate(date=new Date(),split='-'){//格式化日期
