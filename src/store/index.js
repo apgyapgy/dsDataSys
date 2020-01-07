@@ -1,8 +1,8 @@
 import store from './store.js';
-import {addToCart,updateCart,deleteFromCart} from './actions/cartAction';
-console.log("initial state:",store.getState());
-let unsubscribe = store.subscribe(()=>{
-    console.log('unsubscribe:',store.getState());
+import { addToCart , updateCart , deleteFromCart } from './actions/cartAction';
+console.log( "initial state:" , store.getState() );
+let unsubscribe = store.subscribe( () => {
+    console.log( 'unsubscribe:' , store.getState() );
 });
 
 // store.dispatch(addToCart('Coffee 500gm',1,250));

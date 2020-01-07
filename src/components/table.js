@@ -1,22 +1,22 @@
-import React,{Component} from 'react';
-import {Table,Button} from 'antd';
-import {namesObj} from '@/utils/public'
+import React,{ Component } from 'react';
+import { Table , Button } from 'antd';
+import { namesObj } from '@/utils/public'
 import Request from '@/utils/request';
 
 export default class TableCustom extends Component{
-    constructor(props){
-        super(props);
+    constructor( props ){
+        super( props );
         this.state = {};
-        this.download = this.download.bind(this);
+        this.download = this.download.bind( this );
     }
     download(){
-        let methodNm = window.btoa(this.props.searchedInfo.methodNm);
+        let methodNm = window.btoa( this.props.searchedInfo.methodNm );
         Request({
-            url:'api/data/down',
-            data:this.props.searchedInfo,
+            url : 'api/data/down' ,
+            data : this.props.searchedInfo ,
             // method:'POST',
-            down:true,
-            fileName:namesObj[methodNm]
+            down : true ,
+            fileName : namesObj[methodNm]
         })
     }
     
@@ -24,14 +24,17 @@ export default class TableCustom extends Component{
         return (
             <div className="table_wrapper">
                 {
-                    this.props.data&&this.props.data.tableList?
-                    <Button className="float_right" onClick={this.download}>导出CSV</Button>
-                    :''
+                    this.props.data && this.props.data.tableList 
+                    ? 
+                        <Button className="float_right" onClick={this.download}>导出CSV</Button>
+                    :
+                        ''
                 }
                 {
-                    this.props.data&&this.props.data.tableList?
-                        <Table columns={this.props.data.tableHeader} bordered={true} 
-                            dataSource={this.props.data.tableList} />
+                    this.props.data && this.props.data.tableList
+                    ?
+                        <Table columns={ this.props.data.tableHeader } bordered={ true } 
+                            dataSource={ this.props.data.tableList } />
                     :''
                 }
             </div>

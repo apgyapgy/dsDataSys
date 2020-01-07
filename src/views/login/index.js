@@ -1,7 +1,7 @@
-import React,{Component} from 'react';
+import React , { Component } from 'react';
 import './index.scss';
 import { Button } from 'antd';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import store from '@/store/store';
 // import {updateUser} from '@/store/actions/userAction';
 class Login extends Component{
@@ -9,8 +9,8 @@ class Login extends Component{
         console.log("haha:",this)
     }
     login(){
-        store.dispatch({type:'UPDATE_USER',user:{name:'admin'}});
-        this.props.history.push('/');
+        store.dispatch({ type:'UPDATE_USER' , user : { name : 'admin' } });
+        this.props.history.push( '/' );
     }
     render(){
         return(
@@ -43,15 +43,15 @@ class Login extends Component{
         )
     }
 }
-const mapStateToProps = (state)=>{
+const mapStateToProps = ( state ) => {
     return {
-        user:state.user
+        user : state.user
     }
 }
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = ( dispatch ) => {
     return {
-        updateUser(user){
-            dispatch({type:'UPDATE_USER',user:user})
+        updateUser( user ){
+            dispatch({ type:'UPDATE_USER' , user : user })
         }
         
     }
@@ -59,6 +59,6 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Login);
+)( Login );
 
 // D2216 D3060 D3022 g7564 D3068 D3090 G7240 K1156 D3026 D3006 D3010 D3032 D3014 

@@ -1,10 +1,10 @@
-import {createStore} from 'redux';
+import { createStore } from 'redux';
 import rootReducer from './reducers/index';
 
-const store = createStore(rootReducer);
+const store = createStore( rootReducer );
 // console.log("initial state:",store.getState());
-let unsubscribe = store.subscribe(() =>
-  console.log(store.getState())
+let unsubscribe = store.subscribe( () =>
+  console.log( store.getState() )
 );
 // store.dispatch(addToCart('Coffee 500gm', 1, 250));
 // store.dispatch(addToCart('Flour 1kg', 2, 110));

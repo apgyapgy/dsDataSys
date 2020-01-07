@@ -1,22 +1,22 @@
-import React,{Component} from 'react';
-import {Switch,Route} from 'react-router-dom';
-import {filterRoutes} from '@/router/index';
+import React , { Component } from 'react';
+import { Switch , Route } from 'react-router-dom';
+import { filterRoutes } from '@/router/index';
 export default class Content extends Component{
-    constructor(props){
-        super(props);
+    constructor( props ){
+        super( props );
         this.state = {}
     }
-    renderRoutes(routes){
+    renderRoutes( routes ){
         let routeArr = [];
-        for(var key in routes){
-            let item = routes[key];
-            if(item.children&&item.children.length){
-                routeArr = [...routeArr,...this.renderRoutes(item.children)]
+        for( var key in routes ){
+            let item = routes[ key ];
+            if( item.children && item.children.length ){
+                routeArr = [ ...routeArr , ...this.renderRoutes( item.children ) ]
             }else{
-                if(!item.hidden){
+                if( !item.hidden ){
                     routeArr.push(
-                        <Route key={item.name} exact path={item.path} 
-                            component={item.component}
+                        <Route key={ item.name } exact path={ item.path } 
+                            component={ item.component }
                         >
                         </Route>
                     );
@@ -28,7 +28,7 @@ export default class Content extends Component{
     render(){
         return(
             <Switch>
-                {this.renderRoutes(filterRoutes)}
+                { this.renderRoutes(filterRoutes) }
             </Switch>
         )
     }

@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import store from '@/store/store';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 // import { Spin} from 'antd';
 
 // import {Provider} from 'react-redux';
@@ -14,12 +14,12 @@ import {Provider} from 'react-redux';
 // let store = createStore(todoApp);
 
 ReactDOM.render(
-    <Provider store={store}>
+    <Provider store={ store }>
         {/* <Spin spinning={store.getState().loading} className="spin_custom" size="large"> */}
             <App />
         {/* </Spin> */}
     </Provider>, 
-    document.getElementById('root')
+    document.getElementById( 'root' )
 );
 /*
     <Provider store={store}>

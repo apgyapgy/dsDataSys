@@ -1,17 +1,17 @@
-import {UPDATE_USER} from '../actions/userAction';
+import { UPDATE_USER } from '../actions/userAction';
 const initialUser = {
-    user:{
-        name:'用户'
+    user : {
+        name : '用户'
     }
 }
-export default function(state = initialUser,action){
-    switch(action.type){
-        case UPDATE_USER:
+export default function( state = initialUser , action ){
+    switch( action.type ){
+        case UPDATE_USER :
             return{
                 ...state,
-                user:action.user
+                user : action.user
             }
-        default:
+        default :
             return state;
     }
 }

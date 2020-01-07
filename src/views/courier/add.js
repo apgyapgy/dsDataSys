@@ -1,122 +1,122 @@
-import React,{Component} from 'react';
+import React , { Component } from 'react';
 // import store from '@/store/store';
 import Search from '@/components/search';
 import Table from '@/components/table';
 import LineChart from '@/components/lineChart';
-import {getSearchList,qryByTraceId} from '@/utils/public';//qryData
+import { getSearchList , qryByTraceId } from '@/utils/public';//qryData
 // import Request from '@/utils/request';
 export default class CourierAdd extends Component{
-    methodNm = window.atob('c2piLmNvdXJpZXJzLm5ldy5xdWVyeQ==')
-    constructor(props){
-        super(props);
+    methodNm = window.atob( 'c2piLmNvdXJpZXJzLm5ldy5xdWVyeQ==' )
+    constructor( props ){
+        super( props );
         this.state={
-            searchInfo:{},
-            searchedInfo:{},
-            dataList:{},
-            down:true,
-            lineData:{
-                title: '快递员新增',
-	  			xAxis: {
-	                type: 'category',
-	                data: []
+            searchInfo : {},
+            searchedInfo : {},
+            dataList : {},
+            down : true,
+            lineData : {
+                title : '快递员新增',
+	  			xAxis : {
+	                type : 'category',
+	                data : []
 	            },
-	            legend:[],
-	  			series:[
+	            legend : [],
+	  			series : [
 	            ]
             },
-            methodNm:this.methodNm
+            methodNm : this.methodNm
         };
-        this.initData = this.initData.bind(this);
+        this.initData = this.initData.bind( this );
     }
     componentDidMount(){
         this.initSearchInfo();
     }
     initSearchInfo(){
         let searchInfo = {
-            spendTime:0,
-            showChartDateRange:true,
-            dtTp:'1',
-            branchIdx:0,
-            regionIdx:1,
-            provIdx:2,
-            cityIdx:3,
-            managerIdx:4,
-            dateIdx:6,
-            list:[
+            spendTime : 0,
+            showChartDateRange : true,
+            dtTp : '1',
+            branchIdx : 0,
+            regionIdx : 1,
+            provIdx : 2,
+            cityIdx : 3,
+            managerIdx : 4,
+            dateIdx : 6,
+            list : [
                 {
-                    label:'大区',
-                    type:'area',
-                    multi:true,
-                    name:'region',
-                    data:[],
-                    value:[]
+                    label : '大区',
+                    type : 'area',
+                    multi : true,
+                    name : 'region',
+                    data : [],
+                    value : []
                 },{
-                    label:'区域',
-                    type:'select',
-                    multi:true,
-                    name:'area',
-                    data:[],
-                    value:[]
+                    label : '区域',
+                    type : 'select',
+                    multi : true,
+                    name : 'area',
+                    data : [],
+                    value : []
                 },{
-                    label:'省',
-                    name:'provCode',
-                    type:'prov',
-                    multi:true,
-                    data:[],
-                    value:[]
+                    label : '省',
+                    name : 'provCode',
+                    type : 'prov',
+                    multi : true,
+                    data : [],
+                    value : []
                 },{
-                    label:'市',
-                    type:'city',
-                    multi:true,
-                    name:'cityCode',
-                    data:[],
-                    value:[]
+                    label : '市',
+                    type : 'city',
+                    multi : true,
+                    name : 'cityCode',
+                    data : [],
+                    value : []
                 },{
-                    label:'片区负责人',
-                    name:'manager',
-                    type:'manager',
-                    multi:true,
-                    data:[],
-                    value:[]
+                    label : '片区负责人',
+                    name : 'manager',
+                    type : 'manager',
+                    multi : true,
+                    data : [],
+                    value : []
                 },{
-                    label:'',
-                    name:'hostId',
-                    type:'input',
-                    placeholder:'请输入快递柜id',
-                    value:''
+                    label : '',
+                    name : 'hostId',
+                    type : 'input',
+                    placeholder : '请输入快递柜id',
+                    value : ''
                 },{
-                    label:'时间区间',
-                    name:'dateRange',
-                    type:'date',
-                    multi:true,
-                    value:[]
+                    label : '时间区间',
+                    name : 'dateRange',
+                    type : 'date',
+                    multi : true,
+                    value : []
                 }
             ]
         };
         this.setState({
-            searchInfo:searchInfo,
-            searchedInfo:{
-                methodNm:this.methodNm,
-				dtTp:'1',
-				traceId:''
+            searchInfo : searchInfo,
+            searchedInfo : {
+                methodNm : this.methodNm,
+				dtTp : '1',
+				traceId : ''
             }
-        },()=>{
+        } , () => {
             this.getSearchInfo();
         });
     }
-    getSearchInfo(type){
-        getSearchList(this,type);
+    getSearchInfo( type ){
+        getSearchList( this , type );
     }
     getTableHeader(){
         return [
             {
-                title:'时间',
-                dataIndex:'calendar',
-                key:'calendar'
+                title : '时间',
+                dataIndex : 'calendar',
+                key : 'calendar'
             },{
-                title:'快递员新增数',
-                dataIndex:'count',
-                key:'count'
+                title : '快递员新增数',
+                dataIndex : 'count',
+                key : 'count'
             }
         ]
     }
@@ -130,35 +130,35 @@ export default class CourierAdd extends Component{
         searchedInfo.traceId = '480F71A6FFFBED9A5676960EF4B71BD7'; //data.traceId;
         searchedInfo.dtTp = this.state.searchInfo.dtTp;
         searchedInfo.methodNm = this.state.methodNm;
-        qryByTraceId(searchedInfo,res=>{
+        qryByTraceId( searchedInfo , res => {
             console.log("qryByTraceId:",res);
-            if(res.length){
+            if( res.length ){
                 let lineData = this.state.lineData;
-                lineData.xAxis = {type:'category'};
+                lineData.xAxis = { type : 'category' };
                 lineData.dataset = {
-                    dimensions:[
+                    dimensions : [
                         {
-                            name:'calendar',
-                            displayName:'时间'
+                            name : 'calendar',
+                            displayName : '时间'
                         },{
-                            name:'count',
-                            displayName:'快递员新增数'
+                            name : 'count',
+                            displayName : '快递员新增数'
                         }
                     ],
-                    source:res
+                    source : res
                 };
-                lineData.series = [{type:'line'}]
+                lineData.series = [ { type : 'line' } ]
                 let dataList = {
-                    tableHeader:this.getTableHeader(),
-                    tableList:res.map((item,idx)=>{
+                    tableHeader : this.getTableHeader(),
+                    tableList : res.map( ( item , idx ) => {
                         item.key = idx;
                         return item;
                     })
                 }
                 this.setState({
-                    dataList:dataList,
-                    searchedInfo:searchedInfo,
-                    lineData:lineData
+                    dataList : dataList,
+                    searchedInfo : searchedInfo,
+                    lineData : lineData
                 });
             }
         });
@@ -166,9 +166,9 @@ export default class CourierAdd extends Component{
     render(){
         return (
             <div className="main_content">
-                <Search searchInfo={this.state.searchInfo} obj={this} initData={this.initData} />
-                <LineChart data={this.state.lineData}/>
-                <Table data={this.state.dataList} down={true} searchedInfo={this.state.searchedInfo} />
+                <Search searchInfo={ this.state.searchInfo } obj={ this } initData={ this.initData } />
+                <LineChart data={ this.state.lineData }/>
+                <Table data={ this.state.dataList } down={ true } searchedInfo={ this.state.searchedInfo } />
             </div>
         )
     }

@@ -18,35 +18,35 @@ export default class LineChart extends Component{
         }
         let options = {
             title:{
-                text:opts.title?opts.title:'标题',
-                left:'left'
+                text : opts.title ? opts.title : '标题' ,
+                left : 'left'
             },
-            tooltip:opts.tooltip?opts.tooltip:{trigger: 'axis',axisPointer: {type: 'cross'}},
-            legend: {
-                type:'scroll',
-                bottom: true,
-                padding:0,
-                data:opts.legend?opts.legend:[],
+            tooltip : opts.tooltip ? opts.tooltip : { trigger : 'axis' , axisPointer : { type: 'cross' }},
+            legend : {
+                type : 'scroll',
+                bottom : true,
+                padding : 0,
+                data : opts.legend ? opts.legend : [] ,
             },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
+            grid : {
+                left : '3%',
+                right : '4%',
+                bottom : '3%',
+                containLabel : true
             },
-            xAxis:opts.xAxis?opts.xAxis:[],
-            yAxis:opts.yAxis?opts.yAxis:{min:'dataMin'},
-            series:opts.series?opts.series:[]
+            xAxis : opts.xAxis ? opts.xAxis : [],
+            yAxis : opts.yAxis ? opts.yAxis : { min:'dataMin' },
+            series : opts.series ? opts.series : []
         }
-        if(opts.dataset){
-            options.dataset = opts.dataset;
+        if( opts.dataset ) {
+            options.dataset = opts.dataset ;
             options.legend = {
-                type:'scroll',
-                bottom: true,
-                padding:0,
+                type : 'scroll' ,
+                bottom : true ,
+                padding : 0 ,
             };
         }
-        this.chart.setOption(options,true);
+        this.chart.setOption( options , true );
     }
     render(){
         return (

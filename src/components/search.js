@@ -1,99 +1,99 @@
 import React from 'react';
-import { Select,Input,DatePicker,Button,TreeSelect } from 'antd';
-import {updateSearchInfo,formatDate,updateOperateType} from '@/utils/public';
+import { Select , Input , DatePicker , Button , TreeSelect } from 'antd';
+import { updateSearchInfo , formatDate , updateOperateType } from '@/utils/public';
 // import Request from '@/utils/request';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
-import {operateIds} from '@/utils/operateIds';
+import { operateIds } from '@/utils/operateIds';
 import 'moment/locale/zh-cn';
-moment.locale('zh-cn');
+moment.locale( 'zh-cn' );
 
 const { Option } = Select;
-const {RangePicker} = DatePicker;
+const { RangePicker } = DatePicker;
 export default class Search extends React.Component{
-    constructor(props){
-        super(props);
+    constructor( props ){
+        super( props );
         this.state = {
-            chartDataRange:[
+            chartDataRange : [
                 {
-                    label:'按天',
-                    value:'1'
+                    label : '按天' ,
+                    value : '1'
                 },{
-                    label:'按周',
-                    value:'2'
+                    label : '按周' ,
+                    value : '2'
                 },{
-                    label:'按月',
-                    value:'3'
+                    label : '按月' ,
+                    value : '3'
                 }
             ],
-            courierLevel:[//快递员等级
+            courierLevel : [//快递员等级
                 {
-                    label:'s',
-                    value:"'s'"
+                    label : 's' ,
+                    value : "'s'"
                 },{
-                    label:'a',
-                    value:"'a'"
+                    label : 'a' ,
+                    value : "'a'"
                 },{
-                    label:'b',
-                    value:"'b'"
+                    label : 'b' ,
+                    value : "'b'"
                 },{
-                    label:'c',
-                    value:"'c'"
+                    label : 'c' ,
+                    value : "'c'"
                 },{
-                    label:'d',
-                    value:"'d'"
+                    label : 'd' ,
+                    value : "'d'"
                 }
             ],
-            operateTypeArr:[
+            operateTypeArr : [
                 {
-                    label:'计数类',
-                    value:'0'
+                    label : '计数类' ,
+                    value : '0'
                 },{
-                    label:'计时类',
-                    value:'1'
+                    label : '计时类' ,
+                    value : '1'
                 }
             ],
-            pickerOptions:{//设置日历组件只能选择今天及之前日期
-                disabledDate(time) {
+            pickerOptions : {//设置日历组件只能选择今天及之前日期
+                disabledDate( time ) {
                   return time.getTime() > Date.now() - 8.64e6;
                 }
             }, 
-            parcelArr:[//包裹类型数组
+            parcelArr : [//包裹类型数组
                 {
-                    label:'韵达',
-                    value:'3'
+                    label : '韵达' ,
+                    value : '3'
                 },{
-                      label:'承包',
-                      value:'2'
+                      label : '承包' ,
+                      value : '2'
                 },{
-                      label:'收费投递',
-                      value:'0'
+                      label : '收费投递' ,
+                      value : '0'
                 },{
-                      label:'免费投递',
-                      value:'1'
+                      label : '免费投递' ,
+                      value : '1'
                 }
             ],
-            pickArr:[//取出类型
+            pickArr : [//取出类型
                 {
-                    label:'取件码取件',
-                    value:'00'
+                    label : '取件码取件' ,
+                    value : '00'
                 },{
-                    label:'app开箱取件',
-                    value:'02'
+                    label : 'app开箱取件' ,
+                    value : '02'
                 },{
-                    label:'远程开箱取件',
-                    value:'01'
+                    label : '远程开箱取件' ,
+                    value : '01'
                 },{
-                    label:'微信扫码开箱取件',
-                    value:'04'
+                    label : '微信扫码开箱取件' ,
+                    value : '04'
                 }
             ],
-            initDateFlag:false,//是否初始化过日期
+            initDateFlag : false,//是否初始化过日期
         }
-        this.handleDateChange = this.handleDateChange.bind(this);
-        this.changeDateRange = this.changeDateRange.bind(this);
-        this.handleOperateChange = this.handleOperateChange.bind(this);
-        this.handleOperateTypeChange = this.handleOperateTypeChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind( this );
+        this.changeDateRange = this.changeDateRange.bind( this );
+        this.handleOperateChange = this.handleOperateChange.bind( this );
+        this.handleOperateTypeChange = this.handleOperateTypeChange.bind( this );
     }
 
     componentDidMount(){
@@ -111,46 +111,46 @@ export default class Search extends React.Component{
     }
 
     renderSearchItem(){//渲染条件维度
-        return this.props.searchInfo.list.map((item,idx)=>{
+        return this.props.searchInfo.list.map( (item,idx) => {
             switch(item.type){
-                case 'input':return (
+                case 'input' : return (
                     <div className="filter_item" key={idx}>
                         <Input placeholder={item.placeholder?item.placeholder:'请输入'} 
-                            value={item.value} onChange={(event)=>this.handleInputChange(event,idx,item.name)} />
+                            value={item.value} onChange={ (event) => this.handleInputChange(event,idx,item.name)} />
                     </div>
                 );
-                case 'date':return (
+                case 'date' :  return (
                     <div className="filter_item" key={idx}>
                         {item.label}：
-                        <RangePicker value={item.value.map((date)=>moment(date,'YYYYMMDD'))} 
-                            locale={locale}
-                            format="YYYY-MM-DD" onChange={this.handleDateChange}
-                            disabledDate={(current)=>current && current > moment().endOf('day')}
+                        <RangePicker value={ item.value.map( (date) => moment(date,'YYYYMMDD') ) } 
+                            locale={ locale }
+                            format="YYYY-MM-DD" onChange={ this.handleDateChange }
+                            disabledDate={ ( current ) => current && current > moment().endOf('day') }
                         />
                     </div>
                 );
-                case 'operate':return '';
+                case 'operate' : return '' ;
                 default:
                     let datasObj = {
-                        'courier':'courierLevel',
-                        'parcel':'parcelArr',
-                        'pick':'pickArr'
+                        'courier' : 'courierLevel' ,
+                        'parcel' : 'parcelArr' ,
+                        'pick' : 'pickArr'
                     };
                     let dataName = datasObj[item.name];
-                    let datas = dataName?this.state[dataName]:item.data;
+                    let datas = dataName ? this.state[dataName] : item.data;
                     return (
                         <div className="filter_item" key={idx}>
-                            {item.label}：
-                            <Select mode={item.multi?'multiple':''}
-                                key={item.name}
-                                style={{ width: 200 }}
-                                onChange={(e)=>this.handleChange(e,item.name,idx)}
-                                placeholder={item.placeholder?item.placeholder:'请选择'}
-                                maxTagCount={1}
-                                value={item.value}
+                            {item.label} ： 
+                            <Select mode={ item.multi ? 'multiple' : '' }
+                                key={ item.name }
+                                style={ { width: 200 } }
+                                onChange={ (e) => this.handleChange(e,item.name,idx) }
+                                placeholder={ item.placeholder ? item.placeholder : '请选择' }
+                                maxTagCount={ 1 }
+                                value={ item.value }
                                 allowClear
                             >
-                                {datas.length? this.renderSelectItem(datas) :''}
+                                { datas.length ? this.renderSelectItem(datas) : '' }
                             </Select>
                         </div>
                     );
@@ -159,48 +159,48 @@ export default class Search extends React.Component{
     }
 
     renderSelectItem(datas){//渲染下拉列表框选项
-        return datas.map((data)=><Option value={data.value} key={data.value}>{data.label}</Option>)
+        return datas.map( (data) => <Option value={data.value} key={data.value}>{data.label}</Option> )
     }
 
     handleChange(value,name,idx){//选择下拉列表框
-        updateSearchInfo(this.props.obj,value,idx,name);
+        updateSearchInfo( this.props.obj , value , idx , name );
     }
 
-    handleEnter(e){
+    handleEnter( e ){
         // e.persist()
         console.log("handleEnter:",e)
     }
 
-    handleDateChange(dates,dateStrings){//选择日期
+    handleDateChange( dates , dateStrings ){//选择日期
         // console.log("handleDateChange:",dates,dateStrings)
-        updateSearchInfo(this.props.obj,dateStrings,this.props.searchInfo.dateIdx,'dateRange');
+        updateSearchInfo( this.props.obj , dateStrings , this.props.searchInfo.dateIdx , 'dateRange' );
     }
 
-    handleOperateTypeChange(data){//选择埋点类型
+    handleOperateTypeChange( data ){//选择埋点类型
         console.log("handleOperateTypeChange:",data)
-        updateOperateType(this.props.obj,data);
-        updateSearchInfo(this.props.obj,[],this.props.searchInfo.operateIdx,'actionId');
+        updateOperateType( this.props.obj , data );
+        updateSearchInfo( this.props.obj , [] , this.props.searchInfo.operateIdx , 'actionId' );
     }
 
-    handleOperateChange(data,label,extra){//选择埋点id
+    handleOperateChange( data , label , extra ){//选择埋点id
         console.log("onOperateChange:",data,label,extra);
-        updateSearchInfo(this.props.obj,data,this.props.searchInfo.operateIdx);
+        updateSearchInfo( this.props.obj , data , this.props.searchInfo.operateIdx );
     }
 
-    handleInputChange(e,idx,name){
-        const {value} = e.target;
-        updateSearchInfo(this.props.obj,value,idx,name);
+    handleInputChange( e , idx , name ){
+        const { value } = e.target;
+        updateSearchInfo( this.props.obj , value , idx , name );
     }
 
     resetCondition(){//重置条件
-        let obj = this.props.obj;
-        let searchInfo = obj.state.searchInfo;
-        for(var key in searchInfo.list){
+        let obj = this.props.obj ;
+        let searchInfo = obj.state.searchInfo ;
+        for( var key in searchInfo.list ){
             let item = searchInfo.list[key];
-            searchInfo.list[key].value = item.multi?[]:'';
+            searchInfo.list[key].value = item.multi ? [] : '' ;
         }
         obj.setState({
-            searchInfo:searchInfo
+            searchInfo : searchInfo
         });
     }
 
@@ -209,32 +209,32 @@ export default class Search extends React.Component{
     }
 
     changeDateRange(value){//选择按天、按周或按月
-        let obj = this.props.obj,
-            searchInfo = this.props.searchInfo;
+        let obj = this.props.obj ,
+            searchInfo = this.props.searchInfo ;
         searchInfo.dtTp = value;
-        obj.setState({searchInfo:searchInfo})
+        obj.setState({ searchInfo : searchInfo })
     }
 
     setInitDate(){//初始化日期
         let endDate = new Date();
-        let beginDate = new Date(endDate.getTime()-30*24*60*60*1000);
-        updateSearchInfo(this.props.obj,[formatDate(beginDate,''),formatDate(endDate,'')],this.props.searchInfo.dateIdx,'dateRange');
+        let beginDate = new Date( endDate.getTime() - 30*24*60*60*1000 );
+        updateSearchInfo( this.props.obj , [formatDate(beginDate,''),formatDate(endDate,'')] , this.props.searchInfo.dateIdx , 'dateRange' );
     }
 
     render(){
         return (
             <div className="search_wrapper">
                 <div className="filter_container clearfix">
-                    {this.props.searchInfo?.list?this.renderSearchItem():''}
+                    { this.props.searchInfo ?. list ? this.renderSearchItem() : '' }
                 </div>
                 {this.props.searchInfo.operateIdx?
                     <div className="filter_container clearfix">
                         <div className="filter_item">
                             埋点类型：
                             <Select style={{ width: 200 }}
-                                onChange={(e)=>this.handleOperateTypeChange(e)}
+                                onChange={ (e) => this.handleOperateTypeChange(e) }
                                 placeholder='请选择埋点类型'
-                                value={this.props.searchInfo.operateType}
+                                value={ this.props.searchInfo.operateType }
                             >
                                 <Option value="0" key="0">计数类</Option>
                                 <Option value="1" key="1">计时类</Option>
@@ -243,27 +243,27 @@ export default class Search extends React.Component{
                         <TreeSelect style={{width:'340px'}}
                             className="filter_item operate"
                             showSearch
-                            value={this.props.searchInfo.list[this.props.searchInfo.operateIdx].value}
+                            value={ this.props.searchInfo.list[this.props.searchInfo.operateIdx].value }
                             dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                             placeholder="请选择埋点id"
                             allowClear
                             multiple
                             maxTagCount={3}
-                            treeData={operateIds[this.props.searchInfo.operateType].children}
-                            onChange={this.handleOperateChange} key={this.props.searchInfo.operateIdx}
+                            treeData={ operateIds[this.props.searchInfo.operateType].children }
+                            onChange={ this.handleOperateChange } key={ this.props.searchInfo.operateIdx }
                         >
                         </TreeSelect>
                     </div>
                     :null
                 }
                 <div className="filter_container clearfix">
-                    <Button type="primary" onClick={()=>this.resetCondition()}>重置条件</Button>
-                    <Button className="float_right" type="primary" onClick={()=>this.toSearch()}>查询</Button>
+                    <Button type="primary" onClick={ () => this.resetCondition() }>重置条件</Button>
+                    <Button className="float_right" type="primary" onClick={ () => this.toSearch() }>查询</Button>
                     <Select className="float_right"
-                        value={this.props.searchInfo.dtTp}
-                        onChange={this.changeDateRange}
+                        value={ this.props.searchInfo.dtTp }
+                        onChange={ this.changeDateRange }
                     >
-                        {this.state.chartDataRange.map((item)=><Option value={item.value} key={item.value}>{item.label}</Option>)}
+                        { this.state.chartDataRange.map( (item) => <Option value={item.value} key={item.value} > {item.label} </Option> )}
                     </Select>
                 </div>
             </div>
