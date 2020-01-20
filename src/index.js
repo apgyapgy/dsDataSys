@@ -5,8 +5,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import store from '@/store/store';
+import '@/store/index';
 import { Provider } from 'react-redux';
-// import { Spin} from 'antd';
+import { Spin} from 'antd';
 
 // import {Provider} from 'react-redux';
 // import {createStore} from 'redux';
@@ -15,9 +16,10 @@ import { Provider } from 'react-redux';
 
 ReactDOM.render(
     <Provider store={ store }>
-        {/* <Spin spinning={store.getState().loading} className="spin_custom" size="large"> */}
+        <Spin spinning={store.getState().loading} className="spin_custom" size="large" data-loading = {store.getState().loading}>
+            {store.getState().loading}
             <App />
-        {/* </Spin> */}
+        </Spin>
     </Provider>, 
     document.getElementById( 'root' )
 );

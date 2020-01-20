@@ -1,10 +1,10 @@
 import React , { Component } from 'react';
 import { Avatar , Menu , Dropdown, Icon } from 'antd';
-export default class Header extends Component{
-    logOut(){
+export default class Header extends Component {
+    logOut() {
         console.log("logOut");
     }
-    render(){
+    render() {
         const menu = (
             <Menu>
               <Menu.Item>

@@ -12,7 +12,7 @@ let initial_board = {
     d1 : null , d2 : null , d3 : null , d4 : null 
 };
 let tile_counter = 0;
-function fold_order( xs , ys , reverse_keys ){
+function fold_order( xs , ys , reverse_keys ) {
     return xs.map( x => {
         return ys.map( y => {
             var key = [ x , y ];
@@ -23,7 +23,7 @@ function fold_order( xs , ys , reverse_keys ){
         });
     });
 }
-function fold_board( board , lines ){
+function fold_board( board , lines ) {
     var new_board = board;
     lines.forEach( line => {
         var new_line = fold_line( board,line );
@@ -33,12 +33,12 @@ function fold_board( board , lines ){
     });
     return new_board;
 }
-function same_board( board1 , board2 ){
+function same_board( board1 , board2 ) {
     return Object.keys( board1 ).reduce( ( ret , key ) => {
         return ret && board1[ key ] ===  board2[ key ];
     } , true );
 }
-function score_board( board ){
+function score_board( board ) {
     return used_spaces( board ).map( key => {
         return ( board[key].values.reduce( ( a , b ) => {
             return a + b;
@@ -48,21 +48,21 @@ function score_board( board ){
     } , 0 );
 }
 
-function fold_line( board , line ){
+function fold_line( board , line ) {
     let tiles = line.map( key => {
         return board[key];
     }).filter( tile => {
         return tile !== null;
     });
     let new_tiles = [];
-    if( tiles ){
+    if( tiles ) {
         //must loop so we can skip next if matched
         for( let i = 0 ; i < tiles.length ; i++ ){
             let tile = tiles[i] ;
-            if( tile){
+            if( tile) {
                 let val = tile_value( tile ),
                     next_tile = tiles[i+1];
-                if( next_tile && val === tile_value( next_tile ) ){
+                if( next_tile && val === tile_value( next_tile ) ) {
                     //skip next tile;
                     i++;
                     new_tiles.push({
@@ -82,13 +82,13 @@ function fold_line( board , line ){
     return new_line;
 }
 
-function new_tile( initial ){
+function new_tile( initial ) {
     return{
         id : tile_counter++ ,
         values : [initial]
     }
 }
-function set_tile( board , where , tile ){
+function set_tile( board , where , tile ) {
     //do not destroy the old board
     let new_board = {};
     Object.keys( board ).forEach( ( key , i ) => {
@@ -97,39 +97,39 @@ function set_tile( board , where , tile ){
     });
     return new_board;
 }
-function tile_value( tile ){
+function tile_value( tile ) {
     return tile ? tile.values[ tile.values.length-1 ] : null;
 }
-function can_move( board ){
+function can_move( board ) {
     var new_board = [ up , down , left , right ].reduce( ( b , direction ) => {
         return fold_board( b , direction );
     } , board );
-    return available_spaces( new_board ).length>0;
+    return available_spaces( new_board ).length > 0;
 }
 
-function available_spaces( board ){
+function available_spaces( board ) {
     return Object.keys( board ).filter( key => {
         return board[ key ] == null;
     });
 }
-function used_spaces( board ){
+function used_spaces( board ) {
     return Object.keys( board ).filter( key => {
         return board[ key ] !== null;
     });
 }
 
-class GameBoard extends React.Component{
-    constructor( props ){
+class GameBoard extends React.Component {
+    constructor( props ) {
         super( props );
         this.state = {};
     }
-    componentDidMount(){
+    componentDidMount() {
         window.addEventListener( 'keydown' , this.keyHandler , false );
     }
-    getInitialState(){
+    getInitialState() {
         return this.addTile( this.adTile( initial_board ) );
     }
-    keyHandler( e ){
+    keyHandler( e ) {
         var directions = {
             37 : left,
             38 : up,
@@ -138,33 +138,34 @@ class GameBoard extends React.Component{
         };
         if( directions[ e.keyCode ] 
             && this.setBoard( fold_board( this.state , directions[ e.keyCode ] ) ) 
-            && Math.floor( Math.random() * 30 , 0 ) < 0 ){
+            && Math.floor( Math.random() * 30 , 0 ) < 0 
+        ) {
             setTimeout( () => {
                 this.setBoard( this.addTile( this.state ) )
             } , 100 );
         }
     }
-    setBoard( new_board ){
-        if( ! same_board( this.state , new_board ) ){
+    setBoard( new_board ) {
+        if( ! same_board( this.state , new_board ) ) {
             this.setState( new_board );
             return true;
         }
         return false;
     }
-    addTile( board ){
+    addTile( board ) {
         var location = available_spaces( board ).sort( () => {
             return .5 - Math.random();
         }).pop();
-        if( location ){
+        if( location ) {
             var two_or_four = Math.floor( Math.random() * 2 , 0 ) ? 2 : 4 ;
             return set_tile( board , location , new_tile( two_or_four ));
         }
         return board;
     }
-    newGame(){
+    newGame() {
         this.setState( this.getInitialState() );
     }
-    render(){
+    render() {
         var status = ! can_move( this.state ) ? " - Game Over!" : "" ;
         return(
             <div className="app">
@@ -177,7 +178,7 @@ class GameBoard extends React.Component{
         )
     }
 }
-class Tiles extends React.Component{
+class Tiles extends React.Component {
     render(){
         var board = this.props.board;
         var tiles = used_spaces( board ).sort( ( a , b ) => {

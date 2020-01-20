@@ -4,8 +4,8 @@ const initialUser = {
         name : '用户'
     }
 }
-export default function( state = initialUser , action ){
-    switch( action.type ){
+export default function( state = initialUser , action ) {
+    switch( action.type ) {
         case UPDATE_USER :
             return{
                 ...state,

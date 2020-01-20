@@ -1,18 +1,18 @@
 import React , { Component } from 'react';
 import { Switch , Route } from 'react-router-dom';
 import { filterRoutes } from '@/router/index';
-export default class Content extends Component{
-    constructor( props ){
+export default class Content extends Component {
+    constructor( props ) {
         super( props );
         this.state = {}
     }
-    renderRoutes( routes ){
+    renderRoutes( routes ) {
         let routeArr = [];
-        for( var key in routes ){
+        for( var key in routes ) {
             let item = routes[ key ];
-            if( item.children && item.children.length ){
+            if( item.children && item.children.length ) {
                 routeArr = [ ...routeArr , ...this.renderRoutes( item.children ) ]
-            }else{
+            } else {
                 if( !item.hidden ){
                     routeArr.push(
                         <Route key={ item.name } exact path={ item.path } 
@@ -25,7 +25,7 @@ export default class Content extends Component{
         }
         return routeArr;
     }
-    render(){
+    render() {
         return(
             <Switch>
                 { this.renderRoutes(filterRoutes) }

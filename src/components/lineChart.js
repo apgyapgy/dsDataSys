@@ -4,16 +4,16 @@ import echarts from 'echarts';
 // import 'echarts/lib/component/tooltip';
 // import 'echarts/lib/component/title';
 export default class LineChart extends Component{
-    componentDidMount(){
+    componentDidMount() {
         var myChart = echarts.init(document.getElementById('cus_chart'));
         this.chart = myChart;
     }
-    componentDidUpdate(){
+    componentDidUpdate() {
         // console.log("componentDidUpdate:",this.props);
         this.setOption(this.props.data);
     }
-    setOption(opts){
-        if(opts.series === undefined || !opts.series.length ){
+    setOption(opts) {
+        if(opts.series === undefined || !opts.series.length ) {
             return;
         }
         let options = {
@@ -48,9 +48,9 @@ export default class LineChart extends Component{
         }
         this.chart.setOption( options , true );
     }
-    render(){
+    render() {
         return (
-            <div id="cus_chart">aaa</div>
+            <div id="cus_chart" style={{visibility: (this.props.data.series.length ? 'visible' : 'hidden')}}></div>
         )
     }
 }

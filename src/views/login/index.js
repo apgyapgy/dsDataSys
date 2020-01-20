@@ -4,15 +4,15 @@ import { Button } from 'antd';
 import { connect } from 'react-redux';
 import store from '@/store/store';
 // import {updateUser} from '@/store/actions/userAction';
-class Login extends Component{
-    componentDidMount(){
+class Login extends Component {
+    componentDidMount() {
         console.log("haha:",this)
     }
-    login(){
+    login() {
         store.dispatch({ type:'UPDATE_USER' , user : { name : 'admin' } });
         this.props.history.push( '/' );
     }
-    render(){
+    render() {
         return(
             <div className="login_wrapper">
                 <div className="login_main">

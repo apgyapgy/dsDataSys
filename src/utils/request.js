@@ -1,6 +1,6 @@
 import baseUrl from './baseUrl';
 import { message } from 'antd';
-const Request = function( opts ){
+const Request = function( opts ) {
     let initDatas = {
         cache : 'no-cache',
         // credentials:'include',//'same-origin',//'include',
@@ -13,29 +13,29 @@ const Request = function( opts ){
         method : opts.method ? opts.method : 'GET'
     }
     let url = baseUrl + opts.url;
-    if( opts.method === 'POST' ){
+    if( opts.method === 'POST' ) {
         initDatas.body = opts.data ? JSON.stringify( opts.data ) : {}
-    }else if( opts.data ){
+    }else if( opts.data ) {
         let paramStr = formatParams( opts.data );
-        if( paramStr ){
+        if( paramStr ) {
             url += '?' + paramStr;
         }
     }
     fetch( url , initDatas )
     .then( res => {
-        if( opts.down ){
-            if( res.ok ){
+        if( opts.down ) {
+            if( res.ok ) {
                 return res.blob();
-            }else{
+            } else {
                 message.error( '系统异常!' );
             }
-        }else{
+        } else {
             return res.json();
         }
     })
     .then( data => {
         console.log( opts.url + ":" , data );
-        if( opts.down ){
+        if( opts.down ) {
             let url = window.URL.createObjectURL( data );
             var a = document.createElement( 'a' );
             a.href = url;
@@ -51,22 +51,22 @@ const Request = function( opts ){
             } , 1000 );
             return;
         }
-        if( data.code === 200 ){
-            if( opts.success ){
+        if( data.code === 200 ) {
+            if( opts.success ) {
                 opts.success( data );
             }
-        }else{
+        } else {
             message.info( data.desc );
-            if( opts.fail ){
+            if( opts.fail ) {
                 opts.fail( data );
             }
         }
     })
 }
-function formatParams( params ){
+function formatParams( params ) {
     let keys = Object.keys( params );
     let paramsArr = [];
-    for( var key in keys ){
+    for( var key in keys ) {
         paramsArr.push(`${keys[key]}=${params[keys[key]]}`)
     }
     return paramsArr.join( '&' );

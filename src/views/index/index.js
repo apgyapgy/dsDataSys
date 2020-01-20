@@ -7,8 +7,8 @@ import CustomHeader from './header';
 import { Icon } from 'antd';
 import { filterRoutes } from '@/router/index';
 // import Item from 'antd/lib/list/Item';
-export default class Index extends Component{
-    constructor( props ){
+export default class Index extends Component {
+    constructor( props ) {
         super( props );
         this.state = {
             breadcrumbs : [],
@@ -17,38 +17,37 @@ export default class Index extends Component{
             collapsed : localStorage.collapsed !== undefined ? JSON.parse( localStorage.collapsed ) : false
         }
     }
-    toggleCollapse(){
-        console.log("toggleCollapse:")
+    toggleCollapse() {
         localStorage.collapsed = !this.state.collapsed;
         this.setState({
             collapsed : !this.state.collapsed
         });
     }
-    componentDidMount(){
+    componentDidMount() {
         this.checkPathName( this.props );
     }
-    componentDidUpdate(){
+    componentDidUpdate() {
         this.checkPathName( this.props );
     }
-    checkPathName( props ){
-        if(props && props.location && props.location.pathname !== this.state.pathname ){
+    checkPathName( props ) {
+        if(props && props.location && props.location.pathname !== this.state.pathname ) {
             let breadcrumbs = this.getBreadCrumb( props.location.pathname );
             this.setState({
                 breadcrumbs : breadcrumbs,
                 pathname : props.location.pathname,
                 menuKey : breadcrumbs.length ? breadcrumbs[ breadcrumbs.length - 1 ].name : ''
             });
-            if( breadcrumbs.length && breadcrumbs[ breadcrumbs.length - 1 ].title ){
+            if( breadcrumbs.length && breadcrumbs[ breadcrumbs.length - 1 ].title ) {
                 document.title = breadcrumbs[ breadcrumbs.length - 1 ].title;
             }
         }
     }
-    getBreadCrumb( path ){
+    getBreadCrumb( path ) {
         let routes = filterRoutes;
         let breadcrumbs = [];
-        for( var parIdx in routes ){
+        for( var parIdx in routes ) {
             let parent = routes[ parIdx ];
-            if( parent.path === path ){
+            if( parent.path === path ) {
                 breadcrumbs.push({
                     path : parent.path,
                     title : parent.title,
@@ -56,9 +55,9 @@ export default class Index extends Component{
                 });
                 break;
             }
-            for( var childIdx in parent.children ){
+            for( var childIdx in parent.children ) {
                 let child = parent.children[ childIdx ];
-                if( child.path === path ){
+                if( child.path === path ) {
                     breadcrumbs.push({
                         path : parent.path,
                         title : parent.title,
@@ -75,14 +74,14 @@ export default class Index extends Component{
         }
         return breadcrumbs;
     }
-    render(){
+    render() {
         return(
             <div className={ `app_wrapper ${ this.state.collapsed ? 'close_slider' : 'open_slider' }`}>
                 {
                     this.state.breadcrumbs.length
                     ?
                     <CustomSider collapsed={ this.state.collapsed } routes={ filterRoutes } 
-                    breadcrumbs={ this.state.breadcrumbs }/>
+                    breadcrumbs={ this.state.breadcrumbs } />
                     :''
                 }
                 <div className="main_container">

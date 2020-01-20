@@ -1,15 +1,15 @@
 import React,{ Component } from 'react';
 import { Card , Tooltip } from 'antd';
-import { formatDate , qryPanelByTraceId } from '@/utils/public';
+import { formatDate , qryPanelByTraceId, setValue } from '@/utils/public';
 import Request from '@/utils/request';
 import { Link } from 'react-router-dom';
 
 import './index.scss';
-export default class Home extends Component{
-    constructor( props ){
+export default class Home extends Component {
+    constructor( props ) {
         super( props );
         this.state = {
-            homeDataList : [],
+            panelList : [],
             traceIdList : [],//traceId列表
             yesterDay : '',
             yesterDayLast : '',//前日
@@ -19,27 +19,26 @@ export default class Home extends Component{
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getDateRange();
-        this.handleEmptyPanelData();
+        this.initPanelList();
         this.qryPanel();
     }
 
-    getDateRange(){
+    getDateRange() {
         let date = new Date();
-        let pre30Date = new Date( date - 24*60*60*1000*30 );
+        let pre30Date = new Date( date - 24 * 60 * 60 * 1000 * 30 );
         this.setState({ 
             dateRange : [ formatDate( pre30Date , '' ) , formatDate( date , '' ) ] 
         });
     }
 
-    qryPanel(){
+    qryPanel() {
         let _this = this;
         Request({
             url :'api/data/panel',
-            success( res ){
-                if( !res.data ){
-                    _this.handleEmptyPanelData();
+            success( res ) {
+                if( !res.data ) {
                     return;
                 }
                 let data = res.data;
@@ -47,45 +46,44 @@ export default class Home extends Component{
                     homeTraceId : data.homeTraceId
                 }
                 qryPanelByTraceId( params , ress=> {
-                    if( !ress.data ){
-                        _this.handleEmptyPanelData();
+                    if( !ress.data ) {
                         return;
                     }
                     let data = ress.data;
-                    let panelList = _this.state.homeDataList;
-                    panelList[0].data = data.yesterDayIncome ? data.yesterDayIncome : 0;
-                    panelList[0].linkRelativeRatio = data.incomeHuanBi ? data.incomeHuanBi : 0;
-                    panelList[0].weekComparedRatio = data.incomeTongBiWeek ? data.incomeTongBiWeek : 0;
-                    panelList[0].yearToYear = data.incomeTongBiYear ? data.incomeTongBiYear : 0;
+                    let panelList = _this.state.panelList;
+                    panelList[0].data = setValue(data.yesterDayIncome);
+                    panelList[0].linkRelativeRatio = setValue(data.incomeHuanBi);
+                    panelList[0].weekComparedRatio = setValue(data.incomeTongBiWeek);
+                    panelList[0].yearToYear = setValue(data.incomeTongBiYear);
 
-                    panelList[1].data = data.yesterPkgNum ? data.yesterPkgNum : 0;
-                    panelList[1].linkRelativeRatio = data.pkgNumHuanBi ? data.pkgNumHuanBi : 0;
-                    panelList[1].weekComparedRatio = data.pkgNumTongBiWeek ? data.pkgNumTongBiWeek : 0;
-                    panelList[1].yearToYear = data.pkgNumTongBiYear ? data.pkgNumTongBiYear : 0;
+                    panelList[1].data = setValue(data.yesterPkgNum);
+                    panelList[1].linkRelativeRatio = setValue(data.pkgNumHuanBi);
+                    panelList[1].weekComparedRatio = setValue(data.pkgNumTongBiWeek);
+                    panelList[1].yearToYear = setValue(data.pkgNumTongBiYear);
 
-                    panelList[2].data = data.yesterKdyNum ? data.yesterKdyNum : 0;
-                    panelList[2].linkRelativeRatio = data.kdyNumHuanBi ? data.kdyNumHuanBi : 0;
-                    panelList[2].weekComparedRatio = data.kdyNumTongBiWeek ? data.kdyNumTongBiWeek : 0;
-                    panelList[2].yearToYear = data.kdyNumTongBiYear ? data.kdyNumTongBiYear : 0;
+                    panelList[2].data = setValue(data.yesterKdyNum);
+                    panelList[2].linkRelativeRatio = setValue(data.kdyNumHuanBi);
+                    panelList[2].weekComparedRatio = setValue(data.kdyNumTongBiWeek);
+                    panelList[2].yearToYear = setValue(data.kdyNumTongBiYear);
 
-                    panelList[3].data = data.yesterTurnover ? data.yesterTurnover : 0;
-                    panelList[3].linkRelativeRatio = data.turnoverHuanBi ? data.turnoverHuanBi : 0;
-                    panelList[3].weekComparedRatio = data.turnoverTongBiWeek ? data.turnoverTongBiWeek : 0;
-                    panelList[3].yearToYear = data.turnoverTongBiYear ? data.turnoverTongBiYear : 0;
+                    panelList[3].data = setValue(data.yesterTurnover);
+                    panelList[3].linkRelativeRatio = setValue(data.turnoverHuanBi);
+                    panelList[3].weekComparedRatio = setValue(data.turnoverTongBiWeek);
+                    panelList[3].yearToYear = setValue(data.turnoverTongBiYear);
 
                     _this.setState({
-                        homeDataList : panelList,
-                        yesterDay : data.yesterDay ? data.yesterDay : '',
-                        yesterDayLast : data.yesterDayLast ? data.yesterDayLast : '',
-                        yesterDayWeek : data.yesterDayWeek ? data.yesterDayWeek : '',
-                        yesterDayYear : data.yesterDayYear ? data.yesterDayYear : ''
+                        panelList : panelList,
+                        yesterDay : setValue(data.yesterDay, ''),
+                        yesterDayLast : setValue(data.yesterDayLast, ''),
+                        yesterDayWeek : setValue(data.yesterDayWeek, ''),
+                        yesterDayYear : setValue(data.yesterDayYear, '')
                     });
                 })
             }
         })
     }
 
-    handleEmptyPanelData(){//无数据时，首页显示默认值
+    initPanelList() {//无数据时，首页显示默认值
         let panelList = [
             {
                 title : '快递柜业务总收入',
@@ -125,14 +123,14 @@ export default class Home extends Component{
                 path : '/manager/cabinetTurnover'
             }
         ];
-        this.setState({ homeDataList : panelList });
+        this.setState({ panelList : panelList });
     }
 
-    toUrl( path ){
+    toUrl( path ) {
         // browserHistory.push(path);
     }
 
-    renderCardItem( item , idx ){
+    renderCardItem( item , idx ) {
         let state = this.state;
         return (
             <Link to={ item.path + '?date=' + this.state.dateRange } key={ idx }>
@@ -168,13 +166,13 @@ export default class Home extends Component{
         )
     }
 
-    render(){
+    render() {
         return (
             <div className="main_content">
                 {
-                    this.state.homeDataList 
+                    this.state.panelList 
                     ?
-                        this.state.homeDataList.map( ( item , idx ) => {
+                        this.state.panelList.map( ( item , idx ) => {
                             return this.renderCardItem( item , idx );
                         })
                     :

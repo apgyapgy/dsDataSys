@@ -3,8 +3,8 @@ import Search from '@/components/search';
 import Table from '@/components/table';
 import LineChart from '@/components/lineChart';
 import { getSearchList , qryByTraceId } from '@/utils/public';//qryData
-export default class Operate extends Component{
-    constructor( props ){
+export default class Operate extends Component {
+    constructor( props ) {
         super( props );
         this.state={
             searchInfo : {},
@@ -26,13 +26,13 @@ export default class Operate extends Component{
         this.initData = this.initData.bind( this );
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.initSearchInfo();
     }
     
     methodNm = '';
 
-    getTimeTableHeader(){//设置计时类表格头部
+    getTimeTableHeader() {//设置计时类表格头部
         let tableHeader = [
             {
                 label : '埋点id',
@@ -43,7 +43,7 @@ export default class Operate extends Component{
                 minWidth : 200
             }
         ];
-        for(let key = 0 ; key <= 61 ; key++){
+        for(let key = 0 ; key <= 61 ; key++) {
             tableHeader.push({
                 label : key < 61 ? key + 's' : '60s以上',
                 prop :'count' + key
@@ -57,7 +57,7 @@ export default class Operate extends Component{
         return tableHeader;
     }
 
-    initSearchInfo(){
+    initSearchInfo() {
         let searchInfo = {
             spendTime : 0,
             showChartDateRange : true,
@@ -121,9 +121,9 @@ export default class Operate extends Component{
                 }
             ]
         };
-        if( this.state.operateType === '0' ){//计数类
+        if( this.state.operateType === '0' ) {//计数类
             this.methodNm = window.atob( 'c2piLmJ1cmllZC5wb2ludC5jb3VudC5xdWVyeQ==' );
-        }else if( this.state.operateType === '1' ){//计时类
+        } else if( this.state.operateType === '1' ) {//计时类
             this.methodNm = window.atob( 'c2piLmJ1cmllZC5wb2ludC50aW1lLnF1ZXJ5' )
         }
         this.setState({
@@ -138,15 +138,15 @@ export default class Operate extends Component{
         });
     }
 
-    getSearchInfo( type ){
+    getSearchInfo( type ) {
         getSearchList( this , type );
     }
 
-    initData(){
+    initData() {
         console.log( "initData" )
     }
 
-    render(){
+    render() {
         return (
             <div className="main_content">
                 <Search searchInfo={ this.state.searchInfo } obj={ this } initData={ this.initData } />

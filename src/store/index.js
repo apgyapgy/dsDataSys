@@ -10,5 +10,6 @@ let unsubscribe = store.subscribe( () => {
 // store.dispatch(addToCart('Juice 2L',1,250));
 // store.dispatch(updateCart('Flour 1kg',5,110));
 // store.dispatch(deleteFromCart('Coffee 500gm'));
+// store.dispatch({type:'UPDATE_LOADING',flag:true})
 
 unsubscribe();
