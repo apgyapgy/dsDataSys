@@ -1,13 +1,13 @@
 function formatOperateId(arr) {
 	return arr.map((item) => {
 		return {
-			title: item ,
+			title: item,
 			key: item ,
 			value: item
 		}
 	});
 }
-export var operateIds = [
+export const operateIds = [
 	{
 		title: '计数类',
 	    children: [
@@ -148,7 +148,8 @@ export var operateIds = [
 		]
 	}
 ];
-let operateIdsRemarks = {
+
+export const operateIdsRemarks = {
 	'A0001': '待机广告点击屏幕',
 	'A0002': '点击“我要取件”',
 	'A0003': '输入取件码取件',
@@ -297,9 +298,11 @@ let operateIdsRemarks = {
 	'E0018': '支付成功-查看预订结果',
 	'E0019': '支付成功-我的预订',
 }
-
-export function getIdRemark(id) {
+export function getIdRemark(id, splitFlag = true) {
 	let remark = operateIdsRemarks[id];
+	if (!splitFlag) {
+		return remark;
+	}
 	remark = remark.length > 10 ? remark.substring(0, 10) + '...' : remark ;
 	return remark;
 }

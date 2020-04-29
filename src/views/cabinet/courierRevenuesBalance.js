@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Search from '@/components/search';
 import Table from '@/components/table';
 import LineChart from '@/components/lineChart';
-import { getSearchList , qryByTraceId, qryData } from '@/utils/public';
+import { getSearchList, qryData } from '@/utils/public'; //qryByTraceId
 
 export default class CourierRevenuesBalance extends Component {
     methodNm = window.atob('c2piLmhvc3QuY2hhcmdlLnRvdGFsLmJhbGFuY2UucXVlcnk=')
@@ -29,7 +29,7 @@ export default class CourierRevenuesBalance extends Component {
         this.initData = this.initData.bind( this );
     }
 
-    componentDidMount() {
+    UNSAFE_componentWillMount() {
         this.initSearchInfo();
     }
 
@@ -111,7 +111,7 @@ export default class CourierRevenuesBalance extends Component {
         getSearchList(this, type);
     }
 
-    getTableHeader(){
+    getTableHeader() {
         return [
             {
                 title: '日期',
@@ -126,13 +126,12 @@ export default class CourierRevenuesBalance extends Component {
     }
 
     async initData() {
-        let data = await qryData(this.state.searchInfo,this.state.methodNm);
-        console.log("data:",data)
+        let data = await qryData(this.state.searchInfo, this.state.methodNm);
         let searchedInfo = this.state.searchedInfo;
         searchedInfo.traceId = data.traceId;
         searchedInfo.dtTp = this.state.searchInfo.dtTp;
         searchedInfo.methodNm = this.state.methodNm;
-        if(data.items.length){
+        if (data.items.length) {
             let lineData = this.state.lineData;
             lineData.xAxis = { type : 'category' };
             lineData.dataset = {

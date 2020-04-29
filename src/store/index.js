@@ -1,5 +1,5 @@
 import store from './store.js';
-import { addToCart , updateCart , deleteFromCart } from './actions/cartAction';
+// import { addToCart , updateCart , deleteFromCart } from './actions/cartAction';
 console.log( "initial state:" , store.getState() );
 let unsubscribe = store.subscribe( () => {
     console.log( 'unsubscribe:' , store.getState() );

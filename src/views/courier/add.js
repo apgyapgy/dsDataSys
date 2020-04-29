@@ -1,9 +1,9 @@
-import React , { Component } from 'react';
+import React, {Component} from 'react';
 // import store from '@/store/store';
 import Search from '@/components/search';
 import Table from '@/components/table';
 import LineChart from '@/components/lineChart';
-import { getSearchList , qryByTraceId, qryData } from '@/utils/public';//
+import { getSearchList, qryByTraceId, qryData } from '@/utils/public';//
 // import Request from '@/utils/request';
 export default class CourierAdd extends Component {
     methodNm = window.atob( 'c2piLmNvdXJpZXJzLm5ldy5xdWVyeQ==' )
@@ -28,7 +28,7 @@ export default class CourierAdd extends Component {
         };
         this.initData = this.initData.bind( this );
     }
-    componentDidMount() {
+    UNSAFE_componentWillMount() {
         this.initSearchInfo();
     }
     initSearchInfo() {
@@ -110,24 +110,20 @@ export default class CourierAdd extends Component {
     getTableHeader() {
         return [
             {
-                title : '时间',
-                dataIndex : 'calendar',
-                key : 'calendar'
-            },{
-                title : '快递员新增数',
-                dataIndex : 'count',
-                key : 'count'
+                title: '时间',
+                dataIndex: 'calendar',
+                key: 'calendar'
+            }, {
+                title: '快递员新增数',
+                dataIndex: 'count',
+                key: 'count'
             }
         ]
     }
     async initData() {
-        // let _this = this;
-        // let data;
         let data = await qryData(this.state.searchInfo,this.state.methodNm);
-        // console.log("qryData:",data)
         let searchedInfo = this.state.searchedInfo;
         searchedInfo.traceId = data.traceId;//'6DE72E632DD6795854625EED5F1CA1AC'; //data.traceId;
-        // searchedInfo.traceId = '480F71A6FFFBED9A5676960EF4B71BD7'; //data.traceId;
         searchedInfo.dtTp = this.state.searchInfo.dtTp;
         searchedInfo.methodNm = this.state.methodNm;
         qryByTraceId( searchedInfo , res => {
@@ -166,9 +162,9 @@ export default class CourierAdd extends Component {
     render() {
         return (
             <div className="main_content">
-                <Search searchInfo={ this.state.searchInfo } obj={ this } initData={ this.initData } />
-                <LineChart data={ this.state.lineData }/>
-                <Table data={ this.state.dataList } down={ true } searchedInfo={ this.state.searchedInfo } />
+                <Search searchInfo={this.state.searchInfo} obj={this} initData={this.initData} />
+                <LineChart data={this.state.lineData}/>
+                <Table data={this.state.dataList} down={true} searchedInfo={this.state.searchedInfo} />
             </div>
         )
     }

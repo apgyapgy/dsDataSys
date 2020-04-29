@@ -224,6 +224,66 @@ export const routes = [
         title: '埋点数据',
         icon: 'line-chart',
         component: Bundle(() => import('@/views/operate/operate')),
+    }, {
+        path: '/tool',
+        name: 'tool',
+        breadcrumbName: '任务管理',
+        title: '任务管理',
+        icon: 'profile',
+        children: [
+            {
+                path: '/tool/index',
+                name: 'toolIndex',
+                component: Bundle(() => import('@/views/tool/taskList')),
+                breadcrumbName: '任务列表',
+                icon: 'profile',
+                title: '任务列表'
+            }, {
+                path: '/tool/edit',
+                name: 'toolEdit',
+                component: Bundle(() => import('@/views/tool/taskEdit')),
+                breadcrumbName: '任务编辑',
+                title: '任务编辑',
+                hidden: true
+            }, {
+                path: '/tool/process',
+                name: 'toolProcess',
+                component: Bundle(() => import('@/views/tool/taskProcess')),
+                breadcrumbName: '完成情况',
+                title: '完成情况',
+                hidden: true
+            }
+        ]
+    }, {
+        path: '/toolRegion',
+        name: 'toolRegion',
+        breadcrumbName: '任务管理',
+        title: '任务管理',
+        icon: 'profile',
+        children: [
+            {
+                path: '/toolRegion/index',
+                name: 'toolRegionIndex',
+                component: Bundle(() => import('@/views/toolRegion/taskList')),
+                breadcrumbName: '任务列表',
+                icon: 'profile',
+                title: '任务列表'
+            }, {
+                path: '/toolRegion/receive',
+                name: 'toolRegionEdit',
+                component: Bundle(() => import('@/views/toolRegion/taskRece')),
+                breadcrumbName: '任务',
+                title: '任务',
+                hidden: true
+            }, {
+                path: '/toolRegion/summary',
+                name: 'toolProcess',
+                component: Bundle(() => import('@/views/toolRegion/taskSummary')),
+                breadcrumbName: '情况汇总',
+                title: '情况汇总',
+                hidden: true
+            }
+        ]
     }
 ]
 export const filterRoutes = routes;

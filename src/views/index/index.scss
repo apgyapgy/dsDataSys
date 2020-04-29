@@ -104,14 +104,16 @@
     }
     .table_wrapper{
         width:100%;
+        // overflow-x: auto;
         .ant-table-wrapper{
             float:left;
-            width:100%;
+            // width:100%;
+            // overflow-x: auto;
         }
     }
     #cus_chart{
         margin:0 auto 30px;
-        width:100%;
+        // width:100%;
         height:600px;
     }
 }

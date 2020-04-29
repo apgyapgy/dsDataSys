@@ -39,7 +39,7 @@ export default class Revenues extends Component {
         this.initData = this.initData.bind( this );
     }
 
-    componentDidMount() {
+    UNSAFE_componentWillMount() {
         this.initSearchInfo();
     }
 
@@ -121,7 +121,7 @@ export default class Revenues extends Component {
         getSearchList(this, type);
     }
 
-    getTableHeader(){
+    getTableHeader() {
         return [
             {
                 title: '日期',

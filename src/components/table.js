@@ -6,10 +6,11 @@ import Request from '@/utils/request';
 export default class TableCustom extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            
+        }
         this.download = this.download.bind(this);
     }
-
     download() {
         let methodNm = window.btoa(this.props.searchedInfo.methodNm);
         Request({
@@ -35,7 +36,9 @@ export default class TableCustom extends Component {
                     this.props.data && this.props.data.tableList && this.props.data.tableList.length > 0
                     ?
                         <Table columns={ this.props.data.tableHeader } bordered={ true } 
-                            dataSource={ this.props.data.tableList } />
+                            dataSource={ this.props.data.tableList } 
+                            hideOnSinglePage={true} scroll={{x: true}}
+                            />
                     : ''
                 }
             </div>

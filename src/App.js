@@ -12,9 +12,6 @@ export default class App extends Component {
     for( var key in routes ) {
       let item = routes[ key ];
       routeArr.push( <Route path={ item.path } component={ item.component } key={ item.name }></Route>)
-      // if(item.children&&item.children.length){
-        // routeArr = [...routeArr,...this.renderRoutes(item.children)];
-      // }
     }
     return routeArr;
   }
@@ -22,8 +19,8 @@ export default class App extends Component {
     return (
         <Router>
           <Switch>
-            <Route path="/login" component={Login} key="aa"></Route>
-            <Route path="/" component={Index} key="bb"></Route>
+            <Route path="/login" component={Login} key="login"></Route>
+            <Route path="/" component={Index} key="layout"></Route>
           </Switch>
         </Router>
     );

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import Search from '@/components/search';
 import Table from '@/components/table';
 import LineChart from '@/components/lineChart';
-import { getSearchList , qryByTraceId, qryData } from '@/utils/public';
+import {getSearchList, qryByTraceId, qryData} from '@/utils/public';
 export default class CourierRetentionRate extends Component {
     methodNm = window.atob('c2piLmNvdXJpZXJzLnJldGVudGlvbi5yYXRlLnF1ZXJ5')
     constructor( props ) {
@@ -28,7 +28,7 @@ export default class CourierRetentionRate extends Component {
         this.initData = this.initData.bind( this );
     }
 
-    componentDidMount() {
+    UNSAFE_componentWillMount() {
         this.initSearchInfo();
     }
 
@@ -145,13 +145,13 @@ export default class CourierRetentionRate extends Component {
     }
 
     async initData() {
-        let data = await qryData(this.state.searchInfo,this.state.methodNm);
+        let data = await qryData(this.state.searchInfo, this.state.methodNm);
         let searchedInfo = this.state.searchedInfo;
         searchedInfo.traceId = data.traceId;
         searchedInfo.dtTp = this.state.searchInfo.dtTp;
         searchedInfo.methodNm = this.state.methodNm;
         qryByTraceId(searchedInfo, res => {
-            if(res.length) {
+            if (res.length) {
                 let lineData = this.state.lineData;
                 lineData.xAxis = { type : 'category' };
                 lineData.dataset = {
@@ -201,9 +201,9 @@ export default class CourierRetentionRate extends Component {
     render() {
         return (
             <div className="main_content">
-                <Search searchInfo={ this.state.searchInfo } obj={ this } initData={ this.initData } />
-                <LineChart data={ this.state.lineData }/>
-                <Table data={ this.state.dataList } down={ true } searchedInfo={ this.state.searchedInfo } />
+                <Search searchInfo={this.state.searchInfo} obj={this} initData={this.initData} />
+                <LineChart data={this.state.lineData}/>
+                <Table data={this.state.dataList} down={true} searchedInfo={this.state.searchedInfo} />
             </div>
         )
     }

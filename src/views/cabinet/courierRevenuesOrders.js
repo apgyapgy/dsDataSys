@@ -9,7 +9,7 @@ export default class CourierRevenuesOrders extends Component {
     methodNm = window.atob('c2piLmhvc3QuY2hhcmdlLm9yZGVyLmNvdW50LnF1ZXJ5')
     constructor( props ) {
         super(props);
-        this.state= {
+        this.state = {
             searchInfo: {},
             searchedInfo: {},
             dataList: {},
@@ -29,7 +29,6 @@ export default class CourierRevenuesOrders extends Component {
                         type: 'cross'
                     },
                     formatter: function(params) {
-                        // console.log("hehe:",params);
                         return formatMixTooltip(params, '笔');
                     }
                 }
@@ -39,7 +38,7 @@ export default class CourierRevenuesOrders extends Component {
         this.initData = this.initData.bind( this );
     }
 
-    componentDidMount() {
+    UNSAFE_componentWillMount() {
         this.initSearchInfo();
     }
 
@@ -121,7 +120,7 @@ export default class CourierRevenuesOrders extends Component {
         getSearchList(this, type);
     }
 
-    getTableHeader(){
+    getTableHeader() {
         return [
             {
                 title: '日期',
@@ -152,13 +151,13 @@ export default class CourierRevenuesOrders extends Component {
     }
 
     async initData() {
-        let data = await qryData(this.state.searchInfo,this.state.methodNm);
+        let data = await qryData(this.state.searchInfo, this.state.methodNm);
         let searchedInfo = this.state.searchedInfo;
         searchedInfo.traceId = data.traceId;
         searchedInfo.dtTp = this.state.searchInfo.dtTp;
         searchedInfo.methodNm = this.state.methodNm;
         qryByTraceId(searchedInfo, res => {
-            if(res.length) {
+            if (res.length) {
                 let lineData = this.state.lineData;
                 let sortedData = formatMixchartData(res, 'calendar', ['num1', 'num2', 'num3', 'num4', 'num5']);
                 lineData.xAxis = { type : 'category' };

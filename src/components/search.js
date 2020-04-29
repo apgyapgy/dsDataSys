@@ -178,13 +178,12 @@ export default class Search extends React.Component {
     }
 
     handleOperateTypeChange(data) {//选择埋点类型
-        console.log("handleOperateTypeChange:", data)
         updateOperateType(this.props.obj, data);
         updateSearchInfo(this.props.obj, [], this.props.searchInfo.operateIdx, 'actionId');
     }
 
     handleOperateChange(data, label, extra) {//选择埋点id
-        console.log("onOperateChange:", data, label, extra);
+        // console.log("onOperateChange:", data, label, extra);
         updateSearchInfo(this.props.obj, data, this.props.searchInfo.operateIdx);
     }
 

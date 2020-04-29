@@ -1,36 +1,47 @@
 body {
-  margin: 0;
-  min-height:100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  	margin: 0;
+  	min-height:100%;
+  	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  	-webkit-font-smoothing: antialiased;
+  	-moz-osx-font-smoothing: grayscale;
+}
+
+input:-internal-autofill-selected{
+	background: inherit!important;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
 #root{
-  width:100%;
-  height:100vh;
-  /* height:100%; */
-  /* min-height:100%; */
+  	width:100%;
+  	height:100vh;
+  	/* height:100%; */
+  	/* min-height:100%; */
 }
 div,span,ul,li,a,p,img{
-  padding:0;
-  margin:0;
+  	padding:0;
+  	margin:0;
 }
 .clearfix::after{
-  content:'';
-  height:0;
-  font-size:0;
-  display:block;
-  visibility:hidden;
-  clear:both;
+  	content:'';
+  	height:0;
+  	font-size:0;
+  	display:block;
+  	visibility:hidden;
+  	clear:both;
 }
 .ant-spin-nested-loading,.ant-spin-container{
-  width:100%;
-  height:100%;
+  	width:100%;
+  	height:100%;
 }
+.ant-menu.ant-menu-dark .ant-menu-item-selected, 
+.ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+	background: transparent;
+	color: #fff;
+}
+

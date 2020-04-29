@@ -1,74 +1,80 @@
 import baseUrl from './baseUrl';
-import { message } from 'antd';
-const Request = function( opts ) {
+import {message} from 'antd';
+import {getToken} from '@/utils/auth';
+const Request = function(opts) {
     let initDatas = {
-        cache : 'no-cache',
+        cache: 'no-cache',
         // credentials:'include',//'same-origin',//'include',
-        headers : {
-            'Accept' : 'application/json,text/plain,*/*',
-            'user-agent' : 'Mozilla/4.0 MDN Example',
-            'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8',
+        headers: {
+            'Accept': 'application/json,text/plain,*/*',
+            'user-agent': 'Mozilla/4.0 MDN Example',
+            'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
             // 'Cache-Control':'no-cache'
         },
         method : opts.method ? opts.method : 'GET'
     }
+    if (getToken()) {
+        initDatas.headers.token = getToken();
+    }
     let url = baseUrl + opts.url;
-    if( opts.method === 'POST' ) {
-        initDatas.body = opts.data ? JSON.stringify( opts.data ) : {}
-    }else if( opts.data ) {
-        let paramStr = formatParams( opts.data );
-        if( paramStr ) {
+    if (opts.method === 'POST') {
+        initDatas.body = opts.data ? JSON.stringify(opts.data) : {}
+    } else if (opts.data) {
+        let paramStr = formatParams(opts.data);
+        if (paramStr) {
             url += '?' + paramStr;
         }
     }
-    fetch( url , initDatas )
-    .then( res => {
-        if( opts.down ) {
-            if( res.ok ) {
+    fetch(url, initDatas)
+    .then(res => {
+        if (opts.down) {
+            if(res.ok) {
                 return res.blob();
             } else {
-                message.error( '系统异常!' );
+                message.error('系统异常!');
             }
         } else {
             return res.json();
         }
     })
-    .then( data => {
-        console.log( opts.url + ":" , data );
-        if( opts.down ) {
-            let url = window.URL.createObjectURL( data );
-            var a = document.createElement( 'a' );
+    .then(data => {
+        if(opts.down) {
+            let url = window.URL.createObjectURL(data);
+            var a = document.createElement('a');
             a.href = url;
             a.target = '_blank';
-            a.download = `${opts.fileName?opts.fileName:'数据系统'}.xls`;
+            a.download = `${opts.fileName ? opts.fileName : '数据系统'}.xls`;
             document.body.appendChild(a);
             a.click();
-            let timer = setTimeout( () => {
-                console.log("url:",url);
+            let timer = setTimeout(() => {
+                console.log("url:", url);
                 document.body.removeChild(a);
                 window.URL.revokeObjectURL(url);
                 clearTimeout(timer);
-            } , 1000 );
+            }, 1000 );
             return;
         }
-        if( data.code === 200 ) {
-            if( opts.success ) {
-                opts.success( data );
+        if (data.code === 200) {
+            if(opts.success) {
+                opts.success(data);
             }
+        } else if(data.code === 405) {
+            message.error(data.desc);
+            window.location.href = '/login';
         } else {
-            message.info( data.desc );
-            if( opts.fail ) {
-                opts.fail( data );
+            message.info(data.desc);
+            if(opts.fail) {
+                opts.fail(data);
             }
         }
     })
 }
-function formatParams( params ) {
-    let keys = Object.keys( params );
+function formatParams(params) {
+    let keys = Object.keys(params);
     let paramsArr = [];
-    for( var key in keys ) {
+    for (var key in keys) {
         paramsArr.push(`${keys[key]}=${params[keys[key]]}`)
     }
-    return paramsArr.join( '&' );
+    return paramsArr.join('&');
 }
 export default Request;

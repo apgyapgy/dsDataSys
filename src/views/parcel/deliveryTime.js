@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import Search from '@/components/search';
 import Table from '@/components/table';
 import LineChart from '@/components/lineChart';
-import { getSearchList , qryByTraceId, qryData } from '@/utils/public';
+import {getSearchList, qryByTraceId, qryData} from '@/utils/public';
 
 export default class ParcelDeliveryTime extends Component {
     methodNm = window.atob('c2piLnBhY2thZ2UuZGVsaXZlci50aW1lLnF1ZXJ5')
-    constructor( props ) {
+    constructor(props) {
         super(props);
         this.state= {
             searchInfo: {},
@@ -21,22 +21,21 @@ export default class ParcelDeliveryTime extends Component {
 	                data: []
 	            },
 	            legend: [],
-	  			series: [
-	            ]
+	  			series: []
             },
             methodNm: this.methodNm
         };
-        this.initData = this.initData.bind( this );
+        this.initData = this.initData.bind(this);
     }
 
-    componentDidMount() {
+    UNSAFE_componentWillMount() {
         this.initSearchInfo();
     }
 
     initSearchInfo() {
         let searchInfo = {
-            spendTime : 0,
-            showChartDateRange : true,
+            spendTime: 0,
+            showChartDateRange: true,
             dtTp: '1',
             branchIdx: 0,
             regionIdx: 1,
@@ -215,21 +214,21 @@ export default class ParcelDeliveryTime extends Component {
                 dataIndex: 'deliver_num24',
                 key: 'deliver_num24',
                 title: '24小时'
-             }
+            }
         ]
     }
 
     async initData() {
-        let data = await qryData(this.state.searchInfo,this.state.methodNm);
+        let data = await qryData(this.state.searchInfo, this.state.methodNm);
         let searchedInfo = this.state.searchedInfo;
         searchedInfo.traceId = data.traceId;
         searchedInfo.dtTp = this.state.searchInfo.dtTp;
         searchedInfo.methodNm = this.state.methodNm;
         qryByTraceId(searchedInfo, res => {
-            if(res.length) {
+            if (res.length) {
                 let sortedData = this.sortedData(res[0]);
                 let lineData = this.state.lineData;
-                lineData.xAxis = { type : 'category' };
+                lineData.xAxis = {type: 'category'};
                 lineData.dataset = {
                     dimensions: [
                         'calendar',
@@ -255,7 +254,7 @@ export default class ParcelDeliveryTime extends Component {
                     ],
                     source: sortedData
                 };
-                lineData.series = [{ type: 'line' }, { type: 'line' }, { type: 'line' }, { type: 'line' }, { type: 'line' }, { type: 'line' }]
+                lineData.series = [{type: 'line'}, {type: 'line'}, {type: 'line'}, {type: 'line'}, { type: 'line'}, {type: 'line'}];
                 let dataList = {
                     tableHeader: this.getTableHeader(),
                     tableList: res.map((item, idx) => {
@@ -286,9 +285,9 @@ export default class ParcelDeliveryTime extends Component {
     render() {
         return (
             <div className="main_content">
-                <Search searchInfo={ this.state.searchInfo } obj={ this } initData={ this.initData } />
-                <LineChart data={ this.state.lineData }/>
-                <Table data={ this.state.dataList } down={ true } searchedInfo={ this.state.searchedInfo } />
+                <Search searchInfo={this.state.searchInfo} obj={this} initData={this.initData} />
+                <LineChart data={this.state.lineData}/>
+                <Table data={this.state.dataList} down={true} searchedInfo={this.state.searchedInfo} />
             </div>
         )
     }
